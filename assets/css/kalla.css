@@ -1,0 +1,28 @@
+.logo_perusahaan {
+  width: 8rem;
+}
+
+.bg-gradient-dark {
+  background-color: #252525 !important;
+}
+
+.bg-yellow {
+  background-color: #ede209 !important;
+}
+
+.text-red {
+  color: rgb(241, 8, 8) !important;
+}
+
+.border-left-red {
+  border-left: 0.25rem solid rgb(241, 8, 8) !important;
+}
+
+.thead-success {
+  background-color: #1cc88a;
+}
+
+.btn-edit,
+.btn-hapus {
+  width: 140px;
+}
