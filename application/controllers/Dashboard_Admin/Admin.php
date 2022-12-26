@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_admin/m_admin');
+		$this->load->model('Model_admin/M_admin');
 		$this->load->library('pagination');
 
 		if($this->session->userdata('status')!="telah_login")
@@ -53,7 +53,7 @@ class Admin extends CI_Controller {
 	{
 		$get_bulan = date('n');
 		$get_nama	 = "";
-		if($this->input->get('bulan') || $this->input->get('nama_sales')){
+		if($this->input->get('bulan') && $this->input->get('nama_sales')){
 			$get_bulan = $this->input->get('bulan');
 			$get_nama	 = $this->input->get('nama_sales');
 		}
@@ -102,8 +102,8 @@ class Admin extends CI_Controller {
 
 		//konfigurasi pagination
 		$config['base_url'] = site_url('dashboard_admin/admin/prospek'); //site url
-		$config['total_rows'] = $this->db->count_all('tb_data_prospek'); //total row
-		$config['per_page'] = 5;  //show record per halaman
+		$config['total_rows'] = $this->db->count_all_results('tb_data_prospek'); //total row
+		$config['per_page'] = 10;  //show record per halaman
 		$config["uri_segment"] = 4;  // uri parameter
 		$choice = $config["total_rows"] / $config["per_page"];
 		$config["num_links"] = floor($choice);
@@ -133,7 +133,7 @@ class Admin extends CI_Controller {
 
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
 		$data = array(
-			'data_prospek' => $this->m_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama)->result(),
+			'data_prospek' => $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama)->result(),
 			'bulan' => $bulan,
 			'nama_sales' => $get_nama
 		);           
@@ -143,8 +143,8 @@ class Admin extends CI_Controller {
 		//load view mahasiswa view
 		//$this->load->view('mahasiswa_view',$data);
 
-		//$data['data_prospek'] = $this->m_admin->get_data()->result();
-		$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		//$data['data_prospek'] = $this->M_admin->get_data()->result();
+		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_prospek/v_index',$data);
@@ -153,7 +153,7 @@ class Admin extends CI_Controller {
 
 	// public function prospek()
 	// {
-	// 	$data['data_prospek'] = $this->m_admin->get_data()->result();
+	// 	$data['data_prospek'] = $this->M_admin->get_data()->result();
 	// 	$this->load->view('template_admin/v_header');
 	// 	$this->load->view('template_admin/v_sidebar');
 	// 	$this->load->view('template_admin/data_prospek/v_index',$data);
@@ -194,17 +194,17 @@ class Admin extends CI_Controller {
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data['data_prospek'] = $this->m_admin->get_data($config["per_page"], $data['page'])->result();           
+		$data['data_prospek'] = $this->M_admin->get_data($config["per_page"], $data['page'])->result();           
 
 		$data['pagination'] = $this->pagination->create_links();
 
 		//load view mahasiswa view
 		//$this->load->view('mahasiswa_view',$data);
 
-		//$data['data_prospek'] = $this->m_admin->get_data()->result();
-		$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		//$data['data_prospek'] = $this->M_admin->get_data()->result();
+		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 
-		$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_report/v_index', $data);
@@ -246,7 +246,7 @@ class Admin extends CI_Controller {
 
 
 
-		$data['user'] = $this->m_admin->get_user($config['per_page'], $data['page'])->result();
+		$data['user'] = $this->M_admin->get_user($config['per_page'], $data['page'])->result();
 		$data['pagination'] = $this->pagination->create_links();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
@@ -290,15 +290,15 @@ class Admin extends CI_Controller {
 			'foto_profil'	=>	$foto_profil,
 		);
 
-		$this->m_admin->aksi_tambah_user($data, 'tb_user');
+		$this->M_admin->aksi_tambah_user($data, 'tb_user');
 		redirect('dashboard_admin/admin/daftar_user');
 	}
 
 	public function edit_user($id_user)
 	{
 		$where = array('id_user' => $id_user);
-		$data['user'] = $this->m_admin->edit_data_user($where, 'tb_user')->result();
-		//$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		$data['user'] = $this->M_admin->edit_data_user($where, 'tb_user')->result();
+		//$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/daftar_user/v_edit_user', $data);
@@ -306,16 +306,23 @@ class Admin extends CI_Controller {
 
 	}
 
+	public function aksi_edit_user()
+	{
+		$this->M_admin->aksi_edit_user();
+		redirect('dashboard_admin/admin/daftar_user');
+
+	}
+
 	public function hapus_user($id_user)
 	{
 		$where = array('id_user' => $id_user);
-		$this->m_admin->hapus_user($where, 'tb_user');
+		$this->M_admin->hapus_user($where, 'tb_user');
 		redirect('dashboard_admin/admin/daftar_user');
 	}
 
 	public function tambah_data_prospek()
 	{
-		$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_prospek/v_tambah_data', $data);
@@ -350,7 +357,7 @@ class Admin extends CI_Controller {
 			'keterangan_prospek'	=> $keterangan_prospek
 		);
 
-		$this->m_admin->tambah_data($data,'tb_data_prospek');
+		$this->M_admin->tambah_data($data,'tb_data_prospek');
 
 		redirect('dashboard_admin/admin/prospek');
 	}
@@ -358,8 +365,8 @@ class Admin extends CI_Controller {
 	public function edit_data($id_data)
 	{
 		$where		= array('id_data' => $id_data);
-		$data['prospek'] = $this->m_admin->edit_data($where,'tb_data_prospek')->result();
-		$data['nama_lengkap'] = $this->m_admin->get_data_user()->result();
+		$data['prospek'] = $this->M_admin->edit_data($where,'tb_data_prospek')->result();
+		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_prospek/v_edit_data',$data);
@@ -397,7 +404,7 @@ class Admin extends CI_Controller {
 
 		$where = array('id_data' => $id_data);
 
-		$this->m_admin->aksi_edit_data($where,$data,'tb_data_prospek');
+		$this->M_admin->aksi_edit_data($where,$data,'tb_data_prospek');
 
 		redirect('dashboard_admin/admin/prospek');
 
@@ -406,7 +413,7 @@ class Admin extends CI_Controller {
 	public function hapus_data($id_data)
 	{
 		$where = array('id_data' => $id_data);
-		$this->m_admin->hapus_data($where, 'tb_data_prospek');
+		$this->M_admin->hapus_data($where, 'tb_data_prospek');
 		redirect('dashboard_admin/admin/prospek');
 	}
 }

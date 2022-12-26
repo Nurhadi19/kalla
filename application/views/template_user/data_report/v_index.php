@@ -13,13 +13,7 @@
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
                         <select name="nama-sales" id="pencarianNama" class="form-control">
-                          <option value="1">Nama Sales 1</option>
-                          <option value="1">Nama Sales 2</option>
-                          <option value="1">Nama Sales 3</option>
-                          <option value="1">Nama Sales 4</option>
-                          <option value="1">Nama Sales 5</option>
-                          <option value="1">Nama Sales 6</option>
-                          <option value="1">Nama Sales 7</option>
+                          <option value="<?= $this->session->userdata('nama_lengkap')?>" readonly><?= $this->session->userdata('nama_lengkap')?></option>
                         </select>
                       </div>
                     </div>
@@ -81,7 +75,6 @@
                             <th rowspan="2" class="align-middle">Type Kendaraan</th>
                             <th rowspan="2" class="align-middle">Status Prospek</th>
                             <th colspan="2" class="align-middle">Keterangan Prospek</th>
-                            <th rowspan="2" class="align-middle" width="100">Aksi</th>
                           </tr>
                           <tr>
                             <th>Tanggal</th>
@@ -89,72 +82,35 @@
                           </tr>
                         </thead>
                         <tbody id="body-preview">
+                          <?php 
+                          $i = 1;
+                          foreach($data_prospek as $data)
+                          
+                          {?>
                           <tr>
-                            <td>1</td>
-                            <td>Nurhadi Sasono</td>
-                            <td>Instagram</td>
-                            <td>BTN Antara</td>
-                            <td>Muhammad Tegar</td>
-                            <td>AA21MX</td>
-                            <td>Low</td>
-                            <td>Low</td>
-                            <td>18-12-2022</td>
-                            <td>Low</td>
-                            <td>
-                              <a href="#" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="#" class="btn btn-danger btn-sm btn-hapus"> <i class="fas fa-trash"></i> Hapus Data </a>
-                            </td>
+                            <td><?= $i++?></td>
+                            <td><?= $data->nama_customer ?></td>
+                            <td><?= $data->media ?></td>
+                            <td><?= $data->alamat ?></td>
+                            <td><?= $data->sumber_prospek ?></td>
+                            <td><?= $data->model_kendaraan ?></td>
+                            <td><?= $data->type_kendaraan ?></td>
+                            <td><?= $data->status_prospek ?></td>
+                            <td><?= $data->tanggal_prospek ?></td>
+                            <td><?= $data->keterangan_prospek ?></td>
+                          
                           </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nurhadi Sasono</td>
-                            <td>Instagram</td>
-                            <td>BTN Antara</td>
-                            <td>Muhammad Tegar</td>
-                            <td>AA21MX</td>
-                            <td>Low</td>
-                            <td>Low</td>
-                            <td>18-12-2022</td>
-                            <td>Low</td>
-                            <td>
-                              <a href="#" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="#" class="btn btn-danger btn-sm btn-hapus"> <i class="fas fa-trash"></i> Hapus Data </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nurhadi Sasono</td>
-                            <td>Instagram</td>
-                            <td>BTN Antara</td>
-                            <td>Muhammad Tegar</td>
-                            <td>AA21MX</td>
-                            <td>Low</td>
-                            <td>Low</td>
-                            <td>18-12-2022</td>
-                            <td>Low</td>
-                            <td>
-                              <a href="#" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="#" class="btn btn-danger btn-sm btn-hapus"> <i class="fas fa-trash"></i> Hapus Data </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nurhadi Sasono</td>
-                            <td>Instagram</td>
-                            <td>BTN Antara</td>
-                            <td>Muhammad Tegar</td>
-                            <td>AA21MX</td>
-                            <td>Low</td>
-                            <td>Low</td>
-                            <td>18-12-2022</td>
-                            <td>Low</td>
-                            <td>
-                              <a href="#" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="#" class="btn btn-danger btn-sm btn-hapus"> <i class="fas fa-trash"></i> Hapus Data </a>
-                            </td>
-                          </tr>
+                          
+                          
+                          
+                          <?php }?>
                         </tbody>
                       </table>
+                      <div class="row">
+                        <div class="col">
+                          <?= $pagination?>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

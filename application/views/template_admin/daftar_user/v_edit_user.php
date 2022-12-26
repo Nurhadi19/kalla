@@ -10,7 +10,7 @@
                 <div class="table-responsive">
                   <?php foreach($user as $data){?>
                   <table class="table table-bordered">
-                  <input type="hidden" class="form-control" name="id_data" value="<?= $data->id_user?>" required/>
+                  <input type="hidden" class="form-control" name="id_user" value="<?= $data->id_user?>" required/>
                     <tr>
                       <td style="width: 200px; vertical-align: middle">ID User</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
@@ -37,14 +37,13 @@
                       <td><input type="text" class="form-control" name="username" value="<?= $data->username?>" required/></td>
                     </tr>
                     <tr>
-                      <td style="width: 200px; vertical-align: middle">Password</td>
-                      <td style="width: 40px; vertical-align: middle">:</td>
-                      <td><input type="text" class="form-control" name="password" value="<?= $data->password?>" required/></td>
-                    </tr>
-                    <tr>
                       <td style="width: 200px; vertical-align: middle">Foto Profil</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
-                      <td><input type="text" class="form-control" name="foto_profil" value="<?= $data->foto_profil?>" required/></td>
+                      <td>
+                        <img src="<?= base_url()?>assets/img/foto_profil/<?= $data->foto_profil?>" width="100">
+                        <input type="hidden" name="foto_lama" class="form-group" value="<?= $data->foto_profil?>">
+                        <input type="file" name="foto_profil" class="form-group">
+                      </td>
                     </tr>
                   </table>
                 </div>

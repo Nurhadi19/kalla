@@ -58,7 +58,7 @@
         </li> -->
 
         <!-- Nav Item - Report Collapse Menu -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#spk" aria-expanded="true" aria-controls="collapseDO">
             <i class="fas fa-chart-line"></i>
             <span>SPK</span>
@@ -72,10 +72,10 @@
               <a class="collapse-item" href="utilities-other.html">Other</a>
             </div>
           </div>
-        </li>
+        </li> -->
 
         <!-- Nav Item - DO Collapse Menu -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#outStanding" aria-expanded="true" aria-controls="do">
             <i class="fas fa-chart-line"></i>
             <span>Out Standing</span>
@@ -89,7 +89,7 @@
               <a class="collapse-item" href="utilities-other.html">Other</a>
             </div>
           </div>
-        </li>
+        </li> -->
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

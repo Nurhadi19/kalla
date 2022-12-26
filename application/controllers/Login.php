@@ -5,7 +5,7 @@ class Login extends CI_Controller {
   function __construct()
   {
     parent::__construct();
-    $this->load->model('m_login');
+    $this->load->model('M_login');
   }
 
   public function index()
@@ -22,9 +22,9 @@ class Login extends CI_Controller {
       'password' => md5($password)
     );
 
-    $cek = $this->m_login->cek_login('tb_user',$where)->num_rows();
+    $cek = $this->M_login->cek_login('tb_user',$where)->num_rows();
     if($cek > 0){
-      $data = $this->m_login->cek_login('tb_user',$where)->row();
+      $data = $this->M_login->cek_login('tb_user',$where)->row();
 
       $data_session = array(
         'id_user'       => $data->id_user,
