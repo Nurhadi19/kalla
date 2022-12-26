@@ -31,7 +31,7 @@
                           
                           {?>
                           <tr>
-                            <td><?= $i++?></td>
+                            <td class="align-top text-center"><?= $i++?></td>
                             <td><?= $data->nama_lengkap ?></td>
                             <td><?= $data->jabatan ?></td>
                             <td><?= $data->username ?></td>

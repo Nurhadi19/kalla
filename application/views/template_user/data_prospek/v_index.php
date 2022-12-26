@@ -12,14 +12,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
-                        <select name="nama-sales" id="pencarianNama" class="form-control">
-                          <option value="1">Nama Sales 1</option>
-                          <option value="1">Nama Sales 2</option>
-                          <option value="1">Nama Sales 3</option>
-                          <option value="1">Nama Sales 4</option>
-                          <option value="1">Nama Sales 5</option>
-                          <option value="1">Nama Sales 6</option>
-                          <option value="1">Nama Sales 7</option>
+                          <input type="text" class="form-control" value="<?= $this->session->userdata('nama_lengkap')?>" readonly>
                         </select>
                       </div>
                     </div>
