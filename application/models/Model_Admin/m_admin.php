@@ -10,12 +10,14 @@ class m_admin extends CI_Model {
   
   public function get_data($limit, $start, $month = null, $nama_sales = null)
   {
-    if($month != "" && $nama_sales != ""){
+    if($month == null && $nama_sales == null){
+      return $this->db->get('tb_data_prospek', $limit, $start);
+    } else {
       $query = "SELECT * FROM tb_data_prospek WHERE month(tanggal_prospek) = $month AND sumber_prospek = '$nama_sales'";
+      return $this->db->query($query);
     }
-
     //$this->db->order_by('id_data', 'DESC');
-    return $this->db->get('tb_data_prospek', $limit, $start);
+    
   }
 
   // public function get_data()
