@@ -23,10 +23,10 @@ class M_admin extends CI_Model {
     
   }
 
-  // public function get_data()
-  // {
-  //   return $this->db->get('tb_data_prospek');
-  // }
+  public function get_all_data()
+  {
+    return $this->db->get('tb_data_prospek');
+  }
 
   public function get_user($limit, $start)
   {
@@ -85,7 +85,7 @@ class M_admin extends CI_Model {
 		
   }
 
-  public function hapus_user($where, $table)
+  public function hapus_user()
   {
     $this->db->where($where);
     $this->db->delete($table);

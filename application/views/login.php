@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="<?= base_url()?>assets/css/kalla.css">
   </head>
 
+  <script src="<?= base_url() ?>assets/js/sweetalert2.all.min.js"></script>
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
       <a href="#" class="navbar-brand mr-auto">
@@ -67,5 +69,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url()?>assets/js/sb-admin-2.min.js"></script>
+
+    <?php if($this->session->flashdata('alert') == TRUE):?>
+    <script>
+        Swal.fire({title: 'ERROR',text: '<?= $this->session->flashdata('alert') ?>',icon: 'error',confirmButtonText: 'OK'})
+    </script>
+    <?php endif ?>
   </body>
 </html>
