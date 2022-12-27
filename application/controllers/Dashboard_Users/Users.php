@@ -1,6 +1,9 @@
 <?php
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Users extends CI_Controller {
+
 
   function __construct()
 	{
@@ -234,6 +237,58 @@ class Users extends CI_Controller {
 
 		redirect('dashboard_users/users/prospek');
 
+	}
+
+	public function export_excel()
+	{
+		$where = array('sumber_prospek' => $this->session->userdata('nama_lengkap'));
+		$data_prospek = $this->M_users->get_where_data($where, 'tb_data_prospek')->result();
+
+		$PHPExcelSheet = new SpreadSheet();
+
+		$PHPExcel = $PHPExcelSheet->getActiveSheet();
+
+		$PHPExcel->setCellValue("A1","Nomor");
+		$PHPExcel->setCellValue("B1","Nama Customer");
+		$PHPExcel->setCellValue("C1","Media");
+		$PHPExcel->setCellValue("D1","Alamat");
+		$PHPExcel->setCellValue("E1","Sumber Prospek");
+		$PHPExcel->setCellValue("F1","Model Kendaraan");
+		$PHPExcel->setCellValue("G1","Type Kendaraan");
+		$PHPExcel->setCellValue("H1","Status Prospek");
+		$PHPExcel->setCellValue("I1","Keterangan Tanggal Prospek");
+		$PHPExcel->setCellValue("J1","Keterangan Prospek");
+
+		$baris=2;
+		$no=1;
+
+		foreach($data_prospek as $data){
+			$PHPExcel->setCellValue('A'.$baris, $no);
+			$PHPExcel->setCellValue('B'.$baris, $data->nama_customer);
+			$PHPExcel->setCellValue('C'.$baris, $data->media);
+			$PHPExcel->setCellValue('D'.$baris, $data->alamat);
+			$PHPExcel->setCellValue('E'.$baris, $data->sumber_prospek);
+			$PHPExcel->setCellValue('F'.$baris, $data->model_kendaraan);
+			$PHPExcel->setCellValue('G'.$baris, $data->type_kendaraan);
+			$PHPExcel->setCellValue('H'.$baris, $data->status_prospek);
+			$PHPExcel->setCellValue('I'.$baris, $data->tanggal_prospek);
+			$PHPExcel->setCellValue('J'.$baris, $data->keterangan_prospek);
+
+			$no++;
+			$baris++;
+		}
+
+		$writer = new Xlsx($PHPExcelSheet);
+		$filename="Data Laporan Bulanan ".date("d-m-Y-i-s").".xlsx";
+
+		// $PHPExcel->getActiveSheet->setTitle("Data Laporan Bulanan");
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+
+		// $writer=PHPExcel_IOFactory::createWriter($PHPExcel, 'Excel2007');
+		$writer->save('php://output');
 	}
 
 }

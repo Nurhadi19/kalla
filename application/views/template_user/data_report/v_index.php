@@ -59,7 +59,7 @@
                 </form>
                 <div class="row mt-3">
                   <div class="menu ml-auto mr-2 mb-2">
-                    <a href="#" class="btn btn-sm mr-1 btn-info"><i class="fas fa-download"></i> Download Report </a>
+                    <a href="<?= base_url()?>dashboard_users/users/export_excel" class="btn btn-sm mr-1 btn-info"><i class="fas fa-download"></i> Download Report </a>
                   </div>
                   <div class="col-md-12">
                     <div class="table-responsive">

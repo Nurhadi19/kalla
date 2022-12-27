@@ -89,8 +89,8 @@ if($this->input->get('bulan')){
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-success" type="submit">Search<i class="fas fa-search fa-sm ml-2"></i></button>
+                        <div class="">
+                          <button class="btn btn-success" type="submit">Search<i class="fas fa-search fa-sm ml-2"></i></button>
                         </div>
                       </div>
                     </div>

@@ -40,13 +40,28 @@
           </a>
         </li>
 
-        <!-- Nav Item - Report Collapse Menu -->
+        <!-- Nav Item - DO Collapse Menu -->
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDo" aria-expanded="true" aria-controls="collapseDO">
             <i class="fas fa-user"></i>
             <span>DO</span>
           </a>
           <div id="collapseDo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Menu</h6>
+              <a class="collapse-item" href="#">DO</a>
+              <a class="collapse-item" href="#">SPK</a>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Nav Item - list user Collapse Menu -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkun" aria-expanded="true" aria-controls="collapseDO">
+            <i class="fas fa-user"></i>
+            <span>Daftar Akun Sales</span>
+          </a>
+          <div id="collapseAkun" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Daftar User</h6>
               <a class="collapse-item" href="<?= base_url('dashboard_admin/admin/daftar_user')?>">List User</a>
@@ -113,13 +128,13 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
               <!-- Nav Item - Alerts -->
-              <li class="nav-item dropdown no-arrow mx-1">
+              <!-- <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-bell fa-fw"></i>
-                  <!-- Counter - Alerts -->
+                  Counter - Alerts
                   <span class="badge badge-danger badge-counter">3+</span>
                 </a>
-                <!-- Dropdown - Alerts -->
+                Dropdown - Alerts
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                   <h6 class="dropdown-header">Alerts Center</h6>
                   <a class="dropdown-item d-flex align-items-center" href="#">
@@ -157,7 +172,7 @@
                   </a>
                   <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                 </div>
-              </li>
+              </li> -->
               <div class="topbar-divider d-none d-sm-block"></div>
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">

@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Admin extends CI_Controller {
 
 	/**
@@ -26,6 +29,7 @@ class Admin extends CI_Controller {
 
 		if($this->session->userdata('status')!="telah_login")
 		{
+			$this->session->set_flashdata('alert', 'Anda belum login, silahkan login terlebih dahulu');
 			redirect('login/');
 		}
 		if($this->session->userdata('jabatan') != "Supervisor")
@@ -43,6 +47,7 @@ class Admin extends CI_Controller {
 		$data['data_low'] = $this->db->query($query_get_low)->num_rows();
 		$data['data_medium'] = $this->db->query($query_get_medium)->num_rows();
 		$data['data_hot'] = $this->db->query($query_get_hot)->num_rows();
+		$data['jumlah_user'] = $this->M_admin->get_data_user()->num_rows();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/v_index', $data);
@@ -248,6 +253,8 @@ class Admin extends CI_Controller {
 
 		$data['user'] = $this->M_admin->get_user($config['per_page'], $data['page'])->result();
 		$data['pagination'] = $this->pagination->create_links();
+
+		
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/daftar_user/v_index', $data);
@@ -415,5 +422,56 @@ class Admin extends CI_Controller {
 		$where = array('id_data' => $id_data);
 		$this->M_admin->hapus_data($where, 'tb_data_prospek');
 		redirect('dashboard_admin/admin/prospek');
+	}
+
+	public function export_excel()
+	{
+		$data_prospek = $this->M_admin->get_all_data()->result();
+
+		$PHPExcelSheet = new SpreadSheet();
+
+		$PHPExcel = $PHPExcelSheet->getActiveSheet();
+
+		$PHPExcel->setCellValue("A1","Nomor");
+		$PHPExcel->setCellValue("B1","Nama Customer");
+		$PHPExcel->setCellValue("C1","Media");
+		$PHPExcel->setCellValue("D1","Alamat");
+		$PHPExcel->setCellValue("E1","Sumber Prospek");
+		$PHPExcel->setCellValue("F1","Model Kendaraan");
+		$PHPExcel->setCellValue("G1","Type Kendaraan");
+		$PHPExcel->setCellValue("H1","Status Prospek");
+		$PHPExcel->setCellValue("I1","Keterangan Tanggal Prospek");
+		$PHPExcel->setCellValue("J1","Keterangan Prospek");
+
+		$baris=2;
+		$no=1;
+
+		foreach($data_prospek as $data){
+			$PHPExcel->setCellValue('A'.$baris, $no);
+			$PHPExcel->setCellValue('B'.$baris, $data->nama_customer);
+			$PHPExcel->setCellValue('C'.$baris, $data->media);
+			$PHPExcel->setCellValue('D'.$baris, $data->alamat);
+			$PHPExcel->setCellValue('E'.$baris, $data->sumber_prospek);
+			$PHPExcel->setCellValue('F'.$baris, $data->model_kendaraan);
+			$PHPExcel->setCellValue('G'.$baris, $data->type_kendaraan);
+			$PHPExcel->setCellValue('H'.$baris, $data->status_prospek);
+			$PHPExcel->setCellValue('I'.$baris, $data->tanggal_prospek);
+			$PHPExcel->setCellValue('J'.$baris, $data->keterangan_prospek);
+
+			$no++;
+			$baris++;
+		}
+
+		$writer = new Xlsx($PHPExcelSheet);
+		$filename="Data Laporan Bulanan ".date("d-m-Y-i-s").".xlsx";
+
+		// $PHPExcel->getActiveSheet->setTitle("Data Laporan Bulanan");
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+
+		// $writer=PHPExcel_IOFactory::createWriter($PHPExcel, 'Excel2007');
+		$writer->save('php://output');
 	}
 }
