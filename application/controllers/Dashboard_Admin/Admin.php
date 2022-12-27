@@ -56,13 +56,13 @@ class Admin extends CI_Controller {
 	
 	public function prospek()
 	{
-		$get_bulan = date('n');
-		$get_nama	 = "";
-		if($this->input->get('bulan') && $this->input->get('nama_sales')){
+		$get_bulan = null;
+		$get_nama = null;
+		if($this->input->get('bulan') || $this->input->get('nama_sales')){
 			$get_bulan = $this->input->get('bulan');
 			$get_nama	 = $this->input->get('nama_sales');
 		}
-
+		
 		$bulan = date('M');
         switch($bulan){
             case 'Jan':
@@ -104,15 +104,12 @@ class Admin extends CI_Controller {
             default:
                 $bulan = 'invalid month';
         }
-
+		
 		//konfigurasi pagination
 		$config['base_url'] = site_url('dashboard_admin/admin/prospek'); //site url
-		$config['total_rows'] = $this->db->count_all_results('tb_data_prospek'); //total row
-		$config['per_page'] = 10;  //show record per halaman
+		$config['per_page'] = 5;  //show record per halaman
 		$config["uri_segment"] = 4;  // uri parameter
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
-
+		
 		// Membuat Style pagination untuk BootStrap v4
 		$config['first_link']       = 'First';
 		$config['last_link']        = 'Last';
@@ -132,17 +129,27 @@ class Admin extends CI_Controller {
 		$config['first_tagl_close'] = '</span></li>';
 		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
 		$config['last_tagl_close']  = '</span></li>';
+		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		
+		$data_prospek =  $this->m_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
+		
+		if($get_bulan == null && $get_nama == null){
+			$config['total_rows'] = $this->db->count_all('tb_data_prospek');
+		} else {
+			$config['total_rows'] = $data_prospek->num_rows();
+		}
+		
+		$choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
 
 		$this->pagination->initialize($config);
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-
+		
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
 		$data = array(
-			'data_prospek' => $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama)->result(),
+			'data_prospek' => $data_prospek->result(),
 			'bulan' => $bulan,
 			'nama_sales' => $get_nama
 		);           
-
 		$data['pagination'] = $this->pagination->create_links();
 
 		//load view mahasiswa view

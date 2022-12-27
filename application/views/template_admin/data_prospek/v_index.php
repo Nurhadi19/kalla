@@ -1,4 +1,15 @@
 <?php
+$get_nama = null;
+$get_bulan = null;
+
+if(isset($_GET['nama_sales'])){
+  $get_nama = $_GET['nama_sales'];
+}
+
+if(isset($_GET['bulan'])){
+  $get_bulan = $_GET['bulan'];
+}
+
 if($this->input->get('bulan')){
     $bulan = $this->input->get('bulan');
     switch($bulan){
@@ -52,16 +63,17 @@ if($this->input->get('bulan')){
                 <hr />
               </div>
               <div class="body">
-                <form action="<?= base_url('dashboard_admin/admin/prospek')?>" method="GET">
-                  <div class="row">
+                <form action="<?= base_url()?>/dashboard_admin/admin/prospek" method="GET">
+                <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
                         <select name="nama_sales" id="pencarianNama" class="form-control">
+                          <option selected disabled>--pilih nama--</option>
                           <?php
-                            foreach($nama_lengkap as $nama)
-                            {?>
-                              <option value="<?= $nama->nama_lengkap?>"><?= $nama->nama_lengkap?></option>
+                            foreach($nama_lengkap as $nama){?>
+                              
+                              <option value="<?= $nama->nama_lengkap?>" <?= ($get_nama == $nama->nama_lengkap ? 'selected' : '') ?> ><?= $nama->nama_lengkap?></option>
                           <?php }?>
                         </select>
                       </div>
@@ -70,6 +82,7 @@ if($this->input->get('bulan')){
                       <div class="form-group">
                         <label for="periodeBulan">Periode Bulan</label>
                         <select name="bulan" id="periodeBulan" class="form-control" value="<?= date('n');?>">
+                          <option selected disabled>--pilih bulan--</option>
                           <option value="1">Januari</option>
                           <option value="2">Februari</option>
                           <option value="3">Maret</option>
@@ -85,8 +98,6 @@ if($this->input->get('bulan')){
                         </select>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="">
@@ -95,6 +106,7 @@ if($this->input->get('bulan')){
                       </div>
                     </div>
                   </div>
+                 
                 </form>
                 <div class="row mt-3">
                   <div class="menu ml-auto mr-3 mb-2">
