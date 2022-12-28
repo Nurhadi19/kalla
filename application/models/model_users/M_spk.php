@@ -22,4 +22,15 @@ class M_spk extends CI_Model {
     return $this->db->get('tb_user');
   }
 
+  public function edit_data_spk($where,$table)
+  {
+    return $this->db->get_where($table,$where);
+  }
+
+  public function aksi_edit_spk($where,$data,$table)
+  {
+    $this->db->where($where);
+    $this->db->update($table,$data);
+  }
+
 }

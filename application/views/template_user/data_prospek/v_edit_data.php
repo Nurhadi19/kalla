@@ -70,7 +70,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td style="width: 200px; vertical-align: middle">Type Kendaraan</td>
+                      <td style="width: 200px; vertical-align: middle">Model Kendaraan</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
                       <td>
                         <select name="model_kendaraan" class="form-control">
@@ -100,6 +100,11 @@
                       </td>
                     </tr>
                     <tr>
+                      <td style="width: 200px; vertical-align: middle">Type Kendaraan</td>
+                      <td style="width: 40px; vertical-align: middle">:</td>
+                      <td><input type="text" class="form-control" name="type_kendaraan" value="<?= $data->type_kendaraan?>" required/></td>
+                    </tr>
+                    <tr>
                       <td style="width: 200px; vertical-align: middle">Status Prospek</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
                       <td>
@@ -107,6 +112,8 @@
                           <option value="Low" <?= ($data->status_prospek == "Low" ? 'selected' : '')?> >Low</option>
                           <option value="Medium" <?= ($data->status_prospek == "Medium" ? 'selected' : '')?> >Medium</option>
                           <option value="Hot" <?= ($data->status_prospek == "Hot" ? 'selected' : '')?> >Hot</option>
+                          <option value="DO" <?= ($data->status_prospek == "DO" ? 'selected' : '')?> >DO</option>
+                          <option value="SPK" <?= ($data->status_prospek == "SPK" ? 'selected' : '')?> >SPK</option>
                         </select>
                       </td>
                     </tr>

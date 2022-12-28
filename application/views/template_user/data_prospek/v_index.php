@@ -95,8 +95,6 @@
                             <td><?= $data->keterangan_prospek ?></td>
                             <td style="vertical-align: middle">
                               <a href="<?= base_url('dashboard_users/users/edit_data/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="#" class="btn btn-secondary btn-sm btn-edit mb-2"> <i class="fas fa-file"></i> DO </a>
-                              <a href="#" class="btn btn-info btn-sm btn-edit"> <i class="fas fa-file"></i> SPK </a>
                             </td>
                           
                           </tr>

@@ -12,9 +12,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
-                        <select name="nama-sales" id="pencarianNama" class="form-control">
-                          <option value="<?= $this->session->userdata('nama_lengkap')?>" readonly><?= $this->session->userdata('nama_lengkap')?></option>
-                        </select>
+                        <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -43,6 +41,8 @@
                           <option value="1">Low</option>
                           <option value="2">Medium</option>
                           <option value="3">Hot</option>
+                          <option value="4">DO</option>
+                          <option value="5">SPK</option>
                         </select>
                       </div>
                     </div>

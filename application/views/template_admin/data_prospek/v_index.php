@@ -158,8 +158,6 @@ if($this->input->get('bulan')){
                             <td>
                               <a href="<?= base_url('dashboard_admin/admin/edit_data/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
                               <a href="<?= base_url('dashboard_admin/admin/hapus_data/'.$data->id_data)?>" class="btn btn-danger btn-sm btn-hapus mb-2"> <i class="fas fa-trash"></i> Hapus Data </a>
-                              <a href="#" class="btn btn-secondary btn-sm btn-edit mb-2"> <i class="fas fa-file"></i> DO </a>
-                              <a href="#" class="btn btn-info btn-sm btn-edit"> <i class="fas fa-file"></i> SPK </a>
                             </td>
                           
                           </tr>

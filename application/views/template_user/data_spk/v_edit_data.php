@@ -3,10 +3,10 @@
             <!-- Header Of Data Prospekan -->
             <div class="card shadow p-4">
               <div class="header">
-                <h4 class="font-weight-bold text-center text-gray-800">Edit Prospekan</h4>
+                <h4 class="font-weight-bold text-center text-gray-800">Edit SPK</h4>
                 <hr />
               </div>
-              <form action="<?= base_url()?>dashboard_admin/admin/aksi_edit_data" method="POST">
+              <form action="<?= base_url()?>dashboard_users/spk/aksi_edit_spk" method="POST">
                 <div class="table-responsive">
                   <?php foreach($prospek as $data){?>
                   <table class="table table-bordered">
@@ -14,25 +14,17 @@
                     <tr>
                       <td style="width: 200px; vertical-align: middle">ID User</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
-                      <td><input type="number" class="form-control" name="id_user" value="<?= $data->id_user?>"/ readonly></td>
+                      <td><input type="number" class="form-control" name="id_user" value="<?= $data->id_user?>" readonly/></td>
                     </tr>
                     <tr>
-                      <td style="width: 200px; vertical-align: middle">Jabatan</td>
+                      <td style="width: 200px; vertical-align: middle">ID Jabatan</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
                       <td><input type="text" class="form-control" name="jabatan" value="<?= $data->jabatan?>" readonly/></td>
                     </tr>
                     <tr>
                       <td style="width: 200px; vertical-align: middle">Nama Sales</td>
                       <td style="width: 40px; vertical-align: middle">:</td>
-                      <td>
-                      <select class="form-control" name="nama_sales">
-                        <?php
-                            foreach($nama_lengkap as $nama)
-                            {?>
-                              <option value="<?= $nama->nama_lengkap?>" <?= ($nama->nama_lengkap == $data->sumber_prospek ? 'selected' : '')?> ><?= $nama->nama_lengkap?></option>
-                            <?php }?>
-                        </select>
-                      </td>
+                      <td><input type="text" class="form-control" name="nama_sales" value="<?= $data->nama_sales?>" readonly/></td>
                     </tr>
                     <tr>
                       <td style="width: 200px; vertical-align: middle">Nama Customer</td>
@@ -117,7 +109,7 @@
                       <td style="width: 40px; vertical-align: middle">:</td>
                       <td>
                         <select class="form-control" name="status_prospek">
-                          <option value="Low" <?= ($data->status_prospek == "Low" ? 'selected' : '')?>>Low</option>
+                          <option value="Low" <?= ($data->status_prospek == "Low" ? 'selected' : '')?> >Low</option>
                           <option value="Medium" <?= ($data->status_prospek == "Medium" ? 'selected' : '')?> >Medium</option>
                           <option value="Hot" <?= ($data->status_prospek == "Hot" ? 'selected' : '')?> >Hot</option>
                           <option value="DO" <?= ($data->status_prospek == "DO" ? 'selected' : '')?> >DO</option>

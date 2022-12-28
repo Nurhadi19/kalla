@@ -81,6 +81,7 @@
                             <th rowspan="2" class="align-middle">Type Kendaraan</th>
                             <th rowspan="2" class="align-middle">Status Prospek</th>
                             <th colspan="2" class="align-middle">Keterangan Prospek</th>
+                            <th rowspan="2" class="align-middle">Aksi</th>
                           </tr>
                           <tr>
                             <th>Tanggal</th>
@@ -106,6 +107,10 @@
                             <td><?= $data->status_prospek ?></td>
                             <td><?= $data->tanggal_prospek ?></td>
                             <td><?= $data->keterangan_prospek ?></td>
+                            <td>
+                              <a href="<?= base_url('dashboard_admin/c_do/edit_do/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
+                              <a href="<?= base_url('dashboard_admin/c_do/hapus_do/'.$data->id_data)?>" class="btn btn-danger btn-sm btn-hapus mb-2"> <i class="fas fa-trash"></i> Hapus Data </a>
+                            </td>
                           </tr>
                           
                           

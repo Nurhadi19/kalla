@@ -12,13 +12,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
-                        <select name="nama-sales" id="pencarianNama" class="form-control">
-                        <?php
-                            foreach($nama_lengkap as $nama)
-                            {?>
-                              <option value="<?= $nama->nama_lengkap?>"><?= $nama->nama_lengkap?></option>
-                            <?php }?>
-                        </select>
+                        <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -47,6 +41,8 @@
                           <option value="1">Low</option>
                           <option value="2">Medium</option>
                           <option value="3">Hot</option>
+                          <option value="4">DO</option>
+                          <option value="5">SPK</option>
                         </select>
                       </div>
                     </div>
@@ -81,6 +77,7 @@
                             <th rowspan="2" class="align-middle">Type Kendaraan</th>
                             <th rowspan="2" class="align-middle">Status Prospek</th>
                             <th colspan="2" class="align-middle">Keterangan Prospek</th>
+                            <th rowspan="2" class="align-middle">Aksi</th>
                           </tr>
                           <tr>
                             <th>Tanggal</th>
@@ -106,6 +103,9 @@
                             <td><?= $data->status_prospek ?></td>
                             <td><?= $data->tanggal_prospek ?></td>
                             <td><?= $data->keterangan_prospek ?></td>
+                            <td style="vertical-align: middle">
+                              <a href="<?= base_url('dashboard_users/spk/edit_data_spk/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
+                            </td>
                           </tr>
                           
                           

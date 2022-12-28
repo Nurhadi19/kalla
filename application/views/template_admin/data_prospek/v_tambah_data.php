@@ -118,6 +118,8 @@
                           <option value="Low">Low</option>
                           <option value="Medium">Medium</option>
                           <option value="Hot">Hot</option>
+                          <option value="DO">DO</option>
+                          <option value="SPK">SPK</option>
                         </select>
                       </td>
                     </tr>

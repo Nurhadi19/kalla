@@ -16,6 +16,23 @@ class M_do extends CI_Model {
     return $this->db->query($query);
   }
 
+  public function edit_do($where, $table)
+  {
+    return $this->db->get_where($table, $where);
+  }
+
+  public function aksi_edit_do($where,$data,$table)
+  {
+    $this->db->where($where);
+    $this->db->update($table,$data);
+  }
+
+  public function hapus_do($where, $table)
+  {
+    $this->db->where($where);
+    $this->db->delete($table);
+  }
+
   public function get_data_user()
   {
     return $this->db->get('tb_user');

@@ -3,10 +3,10 @@
             <!-- Header Of Data Prospekan -->
             <div class="card shadow p-4">
               <div class="header">
-                <h4 class="font-weight-bold text-center text-gray-800">Edit Prospekan</h4>
+                <h4 class="font-weight-bold text-center text-gray-800">Edit DO</h4>
                 <hr />
               </div>
-              <form action="<?= base_url()?>dashboard_admin/admin/aksi_edit_data" method="POST">
+              <form action="<?= base_url()?>dashboard_admin/c_do/aksi_edit_do" method="POST">
                 <div class="table-responsive">
                   <?php foreach($prospek as $data){?>
                   <table class="table table-bordered">
@@ -29,7 +29,7 @@
                         <?php
                             foreach($nama_lengkap as $nama)
                             {?>
-                              <option value="<?= $nama->nama_lengkap?>" <?= ($nama->nama_lengkap == $data->sumber_prospek ? 'selected' : '')?> ><?= $nama->nama_lengkap?></option>
+                              <option value="<?= $nama->nama_lengkap?>" <?= ($nama->nama_lengkap == $data->nama_sales ? 'selected' : '')?> ><?= $nama->nama_lengkap?></option>
                             <?php }?>
                         </select>
                       </td>
