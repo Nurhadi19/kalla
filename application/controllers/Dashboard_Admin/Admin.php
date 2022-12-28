@@ -24,7 +24,7 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Model_admin/M_admin');
+		$this->load->model('Model_Admin/M_admin');
 		$this->load->library('pagination');
 
 		if($this->session->userdata('status')!="telah_login")
@@ -44,9 +44,13 @@ class Admin extends CI_Controller {
 		$query_get_low = "SELECT status_prospek FROM tb_data_prospek WHERE status_prospek = 'Low'";
 		$query_get_medium = "SELECT status_prospek FROM tb_data_prospek WHERE status_prospek = 'Medium'";
 		$query_get_hot = "SELECT status_prospek FROM tb_data_prospek WHERE status_prospek = 'Hot'";
+		$query_get_do = "SELECT status_prospek FROM tb_data_prospek WHERE status_prospek = 'DO'";
+		$query_get_spk = "SELECT status_prospek FROM tb_data_prospek WHERE status_prospek = 'SPK'";
 		$data['data_low'] = $this->db->query($query_get_low)->num_rows();
 		$data['data_medium'] = $this->db->query($query_get_medium)->num_rows();
 		$data['data_hot'] = $this->db->query($query_get_hot)->num_rows();
+		$data['data_do'] = $this->db->query($query_get_do)->num_rows();
+		$data['data_spk'] = $this->db->query($query_get_spk)->num_rows();
 		$data['jumlah_user'] = $this->M_admin->get_data_user()->num_rows();
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
@@ -131,7 +135,7 @@ class Admin extends CI_Controller {
 		$config['last_tagl_close']  = '</span></li>';
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
-		$data_prospek =  $this->m_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
+		$data_prospek =  $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
 		
 		if($get_bulan == null && $get_nama == null){
 			$config['total_rows'] = $this->db->count_all('tb_data_prospek');
@@ -157,6 +161,10 @@ class Admin extends CI_Controller {
 
 		//$data['data_prospek'] = $this->M_admin->get_data()->result();
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
+
+		// $query = "SELECT nama_model_kendaraan FROM tb_data_prospek INNER JOIN tb_model_kendaraan ON model_kendaraan = id_model_kendaraan";
+		// $data['nama_model_kendaraan'] = $this->db->query($query)->result();
+
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_prospek/v_index',$data);
@@ -206,7 +214,7 @@ class Admin extends CI_Controller {
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data['data_prospek'] = $this->M_admin->get_data($config["per_page"], $data['page'])->result();           
+		$data['data_prospek'] = $this->M_admin->get_all_data_report($config["per_page"], $data['page'])->result();           
 
 		$data['pagination'] = $this->pagination->create_links();
 
@@ -214,7 +222,7 @@ class Admin extends CI_Controller {
 		//$this->load->view('mahasiswa_view',$data);
 
 		//$data['data_prospek'] = $this->M_admin->get_data()->result();
-		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
+		
 
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 		$this->load->view('template_admin/v_header');
@@ -347,9 +355,11 @@ class Admin extends CI_Controller {
 	{
 		$id_user 						= $this->input->post('id_user');
 		$jabatan						= $this->input->post('jabatan');
+		$nama_sales					= $this->input->post('nama_sales');
 		$nama_customer 			= $this->input->post('nama_customer');
 		$media							= $this->input->post('media');
 		$alamat							= $this->input->post('alamat');
+		$no_hp							= $this->input->post('no_hp');
 		$sumber_prospek			= $this->input->post('sumber_prospek');
 		$type_kendaraan			= $this->input->post('type_kendaraan');
 		$model_kendaraan		= $this->input->post('model_kendaraan');
@@ -360,12 +370,14 @@ class Admin extends CI_Controller {
 		$data = array(
 			'id_user'							=> $id_user,
 			'jabatan'							=> $jabatan,
+			'nama_sales'					=> $nama_sales,
 			'nama_customer'				=> $nama_customer,
 			'media'								=> $media,
 			'alamat'							=> $alamat,
+			'no_hp'								=> $no_hp,
 			'sumber_prospek'			=> $sumber_prospek,
 			'type_kendaraan'			=> $type_kendaraan,
-			'model_kendaraan'			=> $model_kendaraan,
+			'id_model_kendaraan'	=> $model_kendaraan,
 			'status_prospek'			=> $status_prospek,
 			'tanggal_prospek'			=> $tanggal_prospek,
 			'keterangan_prospek'	=> $keterangan_prospek
@@ -392,9 +404,11 @@ class Admin extends CI_Controller {
 		$id_data 						= $this->input->post('id_data');
 		$id_user 						= $this->input->post('id_user');
 		$jabatan						= $this->input->post('jabatan');
+		$nama_sales					= $this->input->post('nama_sales');
 		$nama_customer 			= $this->input->post('nama_customer');
 		$media							= $this->input->post('media');
 		$alamat							= $this->input->post('alamat');
+		$no_hp							= $this->input->post('no_hp');
 		$sumber_prospek			= $this->input->post('sumber_prospek');
 		$type_kendaraan			= $this->input->post('type_kendaraan');
 		$model_kendaraan		= $this->input->post('model_kendaraan');
@@ -405,12 +419,14 @@ class Admin extends CI_Controller {
 		$data = array(
 			'id_user'							=> $id_user,
 			'jabatan'							=> $jabatan,
+			'nama_sales'					=> $nama_sales,
 			'nama_customer'				=> $nama_customer,
 			'media'								=> $media,
 			'alamat'							=> $alamat,
+			'no_hp'								=> $no_hp,
 			'sumber_prospek'			=> $sumber_prospek,
 			'type_kendaraan'			=> $type_kendaraan,
-			'model_kendaraan'			=> $model_kendaraan,
+			'id_model_kendaraan'	=> $model_kendaraan,
 			'status_prospek'			=> $status_prospek,
 			'tanggal_prospek'			=> $tanggal_prospek,
 			'keterangan_prospek'	=> $keterangan_prospek
@@ -440,30 +456,34 @@ class Admin extends CI_Controller {
 		$PHPExcel = $PHPExcelSheet->getActiveSheet();
 
 		$PHPExcel->setCellValue("A1","Nomor");
-		$PHPExcel->setCellValue("B1","Nama Customer");
-		$PHPExcel->setCellValue("C1","Media");
-		$PHPExcel->setCellValue("D1","Alamat");
-		$PHPExcel->setCellValue("E1","Sumber Prospek");
-		$PHPExcel->setCellValue("F1","Model Kendaraan");
-		$PHPExcel->setCellValue("G1","Type Kendaraan");
-		$PHPExcel->setCellValue("H1","Status Prospek");
-		$PHPExcel->setCellValue("I1","Keterangan Tanggal Prospek");
-		$PHPExcel->setCellValue("J1","Keterangan Prospek");
+		$PHPExcel->setCellValue("B1","Nama Sales");
+		$PHPExcel->setCellValue("C1","Nama Customer");
+		$PHPExcel->setCellValue("D1","Media");
+		$PHPExcel->setCellValue("E1","Alamat");
+		$PHPExcel->setCellValue("F1","No. HP");
+		$PHPExcel->setCellValue("G1","Sumber Prospek");
+		$PHPExcel->setCellValue("H1","Model Kendaraan");
+		$PHPExcel->setCellValue("I1","Type Kendaraan");
+		$PHPExcel->setCellValue("J1","Status Prospek");
+		$PHPExcel->setCellValue("K1","Keterangan Tanggal Prospek");
+		$PHPExcel->setCellValue("L1","Keterangan Prospek");
 
 		$baris=2;
 		$no=1;
 
 		foreach($data_prospek as $data){
 			$PHPExcel->setCellValue('A'.$baris, $no);
-			$PHPExcel->setCellValue('B'.$baris, $data->nama_customer);
-			$PHPExcel->setCellValue('C'.$baris, $data->media);
-			$PHPExcel->setCellValue('D'.$baris, $data->alamat);
-			$PHPExcel->setCellValue('E'.$baris, $data->sumber_prospek);
-			$PHPExcel->setCellValue('F'.$baris, $data->model_kendaraan);
-			$PHPExcel->setCellValue('G'.$baris, $data->type_kendaraan);
-			$PHPExcel->setCellValue('H'.$baris, $data->status_prospek);
-			$PHPExcel->setCellValue('I'.$baris, $data->tanggal_prospek);
-			$PHPExcel->setCellValue('J'.$baris, $data->keterangan_prospek);
+			$PHPExcel->setCellValue('B'.$baris, $data->nama_sales);
+			$PHPExcel->setCellValue('C'.$baris, $data->nama_customer);
+			$PHPExcel->setCellValue('D'.$baris, $data->media);
+			$PHPExcel->setCellValue('E'.$baris, $data->alamat);
+			$PHPExcel->setCellValue('F'.$baris, $data->no_hp);
+			$PHPExcel->setCellValue('G'.$baris, $data->sumber_prospek);
+			$PHPExcel->setCellValue('H'.$baris, $data->nama_model_kendaraan);
+			$PHPExcel->setCellValue('I'.$baris, $data->type_kendaraan);
+			$PHPExcel->setCellValue('J'.$baris, $data->status_prospek);
+			$PHPExcel->setCellValue('K'.$baris, $data->tanggal_prospek);
+			$PHPExcel->setCellValue('L'.$baris, $data->keterangan_prospek);
 
 			$no++;
 			$baris++;

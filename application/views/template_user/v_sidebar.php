@@ -75,21 +75,19 @@
         </li> -->
 
         <!-- Nav Item - DO Collapse Menu -->
-        <!-- <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#outStanding" aria-expanded="true" aria-controls="do">
-            <i class="fas fa-chart-line"></i>
-            <span>Out Standing</span>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDo" aria-expanded="true" aria-controls="collapseDO">
+            <i class="fas fa-user"></i>
+            <span>DO</span>
           </a>
-          <div id="outStanding" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div id="collapseDo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Utilities:</h6>
-              <a class="collapse-item" href="utilities-color.html">Colors</a>
-              <a class="collapse-item" href="utilities-border.html">Borders</a>
-              <a class="collapse-item" href="utilities-animation.html">Animations</a>
-              <a class="collapse-item" href="utilities-other.html">Other</a>
+              <h6 class="collapse-header">Menu</h6>
+              <a class="collapse-item" href="<?= base_url()?>dashboard_users/condo/">DO</a>
+              <a class="collapse-item" href="<?= base_url()?>dashboard_users/spk">SPK</a>
             </div>
           </div>
-        </li> -->
+        </li>
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

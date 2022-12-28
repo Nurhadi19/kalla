@@ -55,16 +55,19 @@
                       <table class="table table-striped table-bordered table-hover">
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
-                            <th rowspan="2" class="align-middle">No.</th>
-                            <th rowspan="2" class="align-middle">Nama Customer</th>
-                            <th rowspan="2" class="align-middle">Media</th>
-                            <th rowspan="2" class="align-middle">Alamat</th>
-                            <th rowspan="2" class="align-middle">Sumber Prospek</th>
-                            <th rowspan="2" class="align-middle">Model Kendaraan</th>
-                            <th rowspan="2" class="align-middle">Type Kendaraan</th>
-                            <th rowspan="2" class="align-middle">Status Prospek</th>
-                            <th colspan="2" class="align-middle">Keterangan Prospek</th>
-                            <th rowspan="2" class="align-middle" width="100">Aksi</th>
+                              <th rowspan="2" class="align-middle">No.</th>
+                              <th rowspan="2" class="align-middle">Nama Sales</th>
+                              <th rowspan="2" class="align-middle">Nama Customer</th>
+                              <th rowspan="2" class="align-middle">Media</th>
+                              <th rowspan="2" class="align-middle">Alamat</th>
+                              <th rowspan="2" class="align-middle">No. HP</th>
+                              <th rowspan="2" class="align-middle">Sumber Prospek</th>
+                              <th rowspan="2" class="align-middle">Model Kendaraan</th>
+                              <th rowspan="2" class="align-middle">Type Kendaraan</th>
+                              <th rowspan="2" class="align-middle">Status Prospek</th>
+                              <th colspan="2" class="align-middle">Keterangan Prospek</th>
+                              <th rowspan="2" class="align-middle" width="100">Aksi</th>
+                            </tr>
                           </tr>
                           <tr>
                             <th>Tanggal</th>
@@ -78,18 +81,22 @@
                           
                           {?>
                           <tr>
-                            <td><?= $i++?></td>
+                          <td><?= $i++?></td>
+                            <td><?= $data->nama_sales?></td>
                             <td><?= $data->nama_customer ?></td>
                             <td><?= $data->media ?></td>
                             <td><?= $data->alamat ?></td>
+                            <td><?= $data->no_hp ?></td>
                             <td><?= $data->sumber_prospek ?></td>
-                            <td><?= $data->model_kendaraan ?></td>
+                            <td><?= $data->nama_model_kendaraan ?></td>
                             <td><?= $data->type_kendaraan ?></td>
                             <td><?= $data->status_prospek ?></td>
                             <td><?= $data->tanggal_prospek ?></td>
                             <td><?= $data->keterangan_prospek ?></td>
                             <td style="vertical-align: middle">
                               <a href="<?= base_url('dashboard_users/users/edit_data/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
+                              <a href="#" class="btn btn-secondary btn-sm btn-edit mb-2"> <i class="fas fa-file"></i> DO </a>
+                              <a href="#" class="btn btn-info btn-sm btn-edit"> <i class="fas fa-file"></i> SPK </a>
                             </td>
                           
                           </tr>

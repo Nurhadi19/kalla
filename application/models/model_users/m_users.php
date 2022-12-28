@@ -8,10 +8,13 @@ class M_users extends CI_Model {
     $this->load->database();
   }
   
-  public function get_data($where, $table, $limit, $start)
+  public function get_data($limit, $start)
   {
-    $this->db->order_by('id_data', 'DESC');
-    return $this->db->get_where($table,$where, $limit, $start);
+    $nama_sales = $this->session->userdata('nama_lengkap');
+
+    $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan  WHERE td.nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
+
+    return $this->db->query($query);
   }
 
   // public function get_data($where,$table)
@@ -41,8 +44,22 @@ class M_users extends CI_Model {
     $this->db->delete($table);
   }
 
-  public function get_where_data($where, $table)
+  public function get_all_data_report($limit, $start)
   {
-    return $this->db->get_where($table, $where);
+    $nama_sales = $this->session->userdata('nama_lengkap');
+
+    $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE nama_sales = '$nama_sales' LIMIT $start, $limit");
+      
+    return $this->db->query($query);
+  }
+
+  public function get_where_data()
+  {
+    $nama_sales = $this->session->userdata('nama_lengkap');
+
+
+    $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_data_prospek td INNER JOIN tb_model_kendaraan tm ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.nama_sales = '$nama_sales'";
+
+    return $this->db->query($query);
   }
 }

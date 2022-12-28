@@ -49,8 +49,8 @@
           <div id="collapseDo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Menu</h6>
-              <a class="collapse-item" href="#">DO</a>
-              <a class="collapse-item" href="#">SPK</a>
+              <a class="collapse-item" href="<?= base_url()?>dashboard_admin/c_do">DO</a>
+              <a class="collapse-item" href="<?= base_url()?>dashboard_admin/spk">SPK</a>
             </div>
           </div>
         </li>

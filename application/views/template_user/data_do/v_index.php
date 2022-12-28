@@ -3,7 +3,7 @@
             <!-- Header Of Data Report -->
             <div class="card shadow p-4">
               <div class="header">
-                <h4 class="font-weight-bold text-center text-gray-800">Menu Report</h4>
+                <h4 class="font-weight-bold text-center text-gray-800">Data DO</h4>
                 <hr />
               </div>
               <div class="body">
@@ -12,13 +12,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
-                        <select name="nama-sales" id="pencarianNama" class="form-control">
-                        <?php
-                            foreach($nama_lengkap as $nama)
-                            {?>
-                              <option value="<?= $nama->nama_lengkap?>"><?= $nama->nama_lengkap?></option>
-                            <?php }?>
-                        </select>
+                        <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -47,8 +41,6 @@
                           <option value="1">Low</option>
                           <option value="2">Medium</option>
                           <option value="3">Hot</option>
-                          <option value="4">SPK</option>
-                          <option value="5">DO</option>
                         </select>
                       </div>
                     </div>

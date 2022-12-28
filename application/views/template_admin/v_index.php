@@ -64,7 +64,7 @@
               </div>
 
               <!-- card out standing -->
-              <div class="col-xl-4 col-md-6 mb-4">
+              <!-- <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -78,7 +78,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <!-- SPK Card Example -->
               <div class="col-xl-4 col-md-6 mb-4">
@@ -87,7 +87,7 @@
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                         <div class="h3 font-weight-bold text-red text-uppercase mb-1">SPK</div>
-                        <div class="h3 mb-0 font-weight-bold text-gray-800">80</div>
+                        <div class="h3 mb-0 font-weight-bold text-gray-800"><?= $data_spk?></div>
                       </div>
                       <div class="col-auto">
                         <i class="fas fa-car fa-2x text-red"></i>
@@ -104,7 +104,7 @@
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                         <div class="h3 font-weight-bold text-warning text-uppercase mb-1">DO</div>
-                        <div class="h3 mb-0 font-weight-bold text-gray-800">100</div>
+                        <div class="h3 mb-0 font-weight-bold text-gray-800"><?= $data_do?></div>
                       </div>
                       <div class="col-auto">
                         <i class="fas fa-car fa-2x text-warning"></i>

@@ -38,7 +38,7 @@
               <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h2 text-gray-900 mb-2">Supervisor Login</h1>
+                    <h1 class="h2 text-gray-900 mb-2">Login Page</h1>
                     <p class="text-gray-900">Management Prospekan</p>
                   </div>
                   <form class="user" action="<?= base_url()?>login/aksi_login" method="POST">

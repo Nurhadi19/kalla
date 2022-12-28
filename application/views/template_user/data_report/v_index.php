@@ -67,9 +67,11 @@
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
                             <th rowspan="2" class="align-middle">No.</th>
+                            <th rowspan="2" class="align-middle">Nama Sales</th>
                             <th rowspan="2" class="align-middle">Nama Customer</th>
                             <th rowspan="2" class="align-middle">Media</th>
                             <th rowspan="2" class="align-middle">Alamat</th>
+                            <th rowspan="2" class="align-middle">No. HP</th>
                             <th rowspan="2" class="align-middle">Sumber Prospek</th>
                             <th rowspan="2" class="align-middle">Model Kendaraan</th>
                             <th rowspan="2" class="align-middle">Type Kendaraan</th>
@@ -89,16 +91,17 @@
                           {?>
                           <tr>
                             <td><?= $i++?></td>
+                            <td><?= $data->nama_sales?></td>
                             <td><?= $data->nama_customer ?></td>
                             <td><?= $data->media ?></td>
                             <td><?= $data->alamat ?></td>
+                            <td><?= $data->no_hp ?></td>
                             <td><?= $data->sumber_prospek ?></td>
-                            <td><?= $data->model_kendaraan ?></td>
+                            <td><?= $data->nama_model_kendaraan ?></td>
                             <td><?= $data->type_kendaraan ?></td>
                             <td><?= $data->status_prospek ?></td>
                             <td><?= $data->tanggal_prospek ?></td>
                             <td><?= $data->keterangan_prospek ?></td>
-                          
                           </tr>
                           
                           

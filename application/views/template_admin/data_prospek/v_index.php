@@ -118,9 +118,11 @@ if($this->input->get('bulan')){
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
                             <th rowspan="2" class="align-middle">No.</th>
+                            <th rowspan="2" class="align-middle">Nama Sales</th>
                             <th rowspan="2" class="align-middle">Nama Customer</th>
                             <th rowspan="2" class="align-middle">Media</th>
                             <th rowspan="2" class="align-middle">Alamat</th>
+                            <th rowspan="2" class="align-middle">No. HP</th>
                             <th rowspan="2" class="align-middle">Sumber Prospek</th>
                             <th rowspan="2" class="align-middle">Model Kendaraan</th>
                             <th rowspan="2" class="align-middle">Type Kendaraan</th>
@@ -134,6 +136,7 @@ if($this->input->get('bulan')){
                           </tr>
                         </thead>
                         <tbody id="body-preview">
+                         
                           <?php 
                           $i = 1;
                           foreach($data_prospek as $data)
@@ -141,18 +144,22 @@ if($this->input->get('bulan')){
                           {?>
                           <tr>
                             <td><?= $i++?></td>
+                            <td><?= $data->nama_sales?></td>
                             <td><?= $data->nama_customer ?></td>
                             <td><?= $data->media ?></td>
                             <td><?= $data->alamat ?></td>
+                            <td><?= $data->no_hp ?></td>
                             <td><?= $data->sumber_prospek ?></td>
-                            <td><?= $data->model_kendaraan ?></td>
+                            <td><?= $data->nama_model_kendaraan ?></td>
                             <td><?= $data->type_kendaraan ?></td>
                             <td><?= $data->status_prospek ?></td>
                             <td><?= $data->tanggal_prospek ?></td>
                             <td><?= $data->keterangan_prospek ?></td>
                             <td>
                               <a href="<?= base_url('dashboard_admin/admin/edit_data/'.$data->id_data)?>" class="btn btn-warning btn-sm btn-edit mb-2"> <i class="fas fa-edit"></i> Edit Data </a>
-                              <a href="<?= base_url('dashboard_admin/admin/hapus_data/'.$data->id_data)?>" class="btn btn-danger btn-sm btn-hapus"> <i class="fas fa-trash"></i> Hapus Data </a>
+                              <a href="<?= base_url('dashboard_admin/admin/hapus_data/'.$data->id_data)?>" class="btn btn-danger btn-sm btn-hapus mb-2"> <i class="fas fa-trash"></i> Hapus Data </a>
+                              <a href="#" class="btn btn-secondary btn-sm btn-edit mb-2"> <i class="fas fa-file"></i> DO </a>
+                              <a href="#" class="btn btn-info btn-sm btn-edit"> <i class="fas fa-file"></i> SPK </a>
                             </td>
                           
                           </tr>

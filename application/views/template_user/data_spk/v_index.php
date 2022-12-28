@@ -3,7 +3,7 @@
             <!-- Header Of Data Report -->
             <div class="card shadow p-4">
               <div class="header">
-                <h4 class="font-weight-bold text-center text-gray-800">Menu Report</h4>
+                <h4 class="font-weight-bold text-center text-gray-800">Data SPK</h4>
                 <hr />
               </div>
               <div class="body">
@@ -47,8 +47,6 @@
                           <option value="1">Low</option>
                           <option value="2">Medium</option>
                           <option value="3">Hot</option>
-                          <option value="4">SPK</option>
-                          <option value="5">DO</option>
                         </select>
                       </div>
                     </div>
