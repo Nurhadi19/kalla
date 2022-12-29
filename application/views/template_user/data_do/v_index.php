@@ -11,7 +11,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="pencarianNama">Pencarian Nama</label>
+                        <label for="pencarianNama">Nama Sales</label>
                         <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
                       </div>
                     </div>

@@ -16,7 +16,7 @@ class M_admin extends CI_Model {
       return $this->db->query($query);
     } else {
       $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td
-      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(tanggal_prospek) = $month AND nama_sales = '$nama_sales' WHERE td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
+      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(tanggal_prospek) = $month AND nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
       return $this->db->query($query);
       // $this->db->like('sumber_prospek', $nama_sales);
       // $this->db->like('tanggal_prospek', $month);
@@ -97,7 +97,7 @@ class M_admin extends CI_Model {
 		
   }
 
-  public function hapus_user()
+  public function hapus_user($where, $table)
   {
     $this->db->where($where);
     $this->db->delete($table);

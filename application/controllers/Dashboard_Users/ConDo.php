@@ -24,7 +24,7 @@ class ConDo extends CI_Controller {
     $nama_sales = $this->session->userdata('nama_lengkap');
     $baris_data = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_data_prospek td INNER JOIN tb_model_kendaraan tm ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO' AND td.nama_sales = '$nama_sales'";
 
-    $config['base_url'] = site_url('dashboard_admin/c_do'); //site url
+    $config['base_url'] = site_url('dashboard_admin/c_do/index'); //site url
 		$config['per_page'] = 5;  //show record per halaman
 		$config["uri_segment"] = 4;  // uri parameter
 		$config['total_rows'] = $this->db->query($baris_data)->num_rows;

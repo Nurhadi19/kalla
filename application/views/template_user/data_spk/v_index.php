@@ -11,7 +11,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="pencarianNama">Pencarian Nama</label>
+                        <label for="pencarianNama">Nama Sales</label>
                         <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
                       </div>
                     </div>
@@ -59,7 +59,7 @@
                 </form>
                 <div class="row mt-3">
                   <div class="menu ml-auto mr-2 mb-2">
-                    <a href="<?= base_url()?>dashboard_admin/admin/export_excel" class="btn btn-sm mr-1 btn-info"><i class="fas fa-download"></i> Download Report </a>
+                    <a href="<?= base_url()?>dashboard_users/users/export_excel" class="btn btn-sm mr-1 btn-info"><i class="fas fa-download"></i> Download Report </a>
                   </div>
                   <div class="col-md-12">
                     <div class="table-responsive">

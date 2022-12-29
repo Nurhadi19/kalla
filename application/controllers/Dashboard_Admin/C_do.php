@@ -23,12 +23,15 @@ class C_do extends CI_Controller {
   {
     $baris_data = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_data_prospek td INNER JOIN tb_model_kendaraan tm ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO'";
 
-    $config['base_url'] = site_url('dashboard_admin/c_do'); //site url
+    $config['base_url'] = site_url('dashboard_admin/c_do/index'); //site url
 		$config['per_page'] = 5;  //show record per halaman
-		$config["uri_segment"] = 3;  // uri parameter
+		$config["uri_segment"] = 4;  // uri parameter
 		// $config['total_rows'] = $this->db->count_all('tb_data_prospek');
 		$config['total_rows'] = $this->db->query($baris_data)->num_rows();
 		// Membuat Style pagination untuk BootStrap v4
+		
+		$choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
 		$config['first_link']       = 'First';
 		$config['last_link']        = 'Last';
 		$config['next_link']        = 'Next';
@@ -47,12 +50,11 @@ class C_do extends CI_Controller {
 		$config['first_tagl_close'] = '</span></li>';
 		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
 		$config['last_tagl_close']  = '</span></li>';
+
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
 		$data_prospek =  $this->M_do->get_data_do($config["per_page"], $data['page']);
 		
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
 
 		$this->pagination->initialize($config);
 		
