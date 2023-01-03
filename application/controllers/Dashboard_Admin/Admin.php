@@ -120,12 +120,8 @@ class Admin extends CI_Controller {
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
 		$data_prospek =  $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
-		// echo '<pre>';print_r($data_prospek->result());echo '</pre>';die();
-		if($get_bulan == null && $get_nama == null){
-			$config['total_rows'] = $this->db->count_all('tb_data_prospek');
-		} else {
-			$config['total_rows'] = $data_prospek->num_rows();
-		}
+
+		$config['total_rows'] = $data_prospek->num_rows();
 		
 		$choice = $config["total_rows"] / $config["per_page"];
 		$config["num_links"] = floor($choice);
@@ -187,11 +183,7 @@ class Admin extends CI_Controller {
 
         $data_report = $this->M_admin->get_all_data_report($config["per_page"], $data['page'], $get_bulan, $get_nama, $get_prospek);           
 
-        if($get_bulan == null && $get_nama == null && $get_prospek == null){
-            $config['total_rows'] = $this->db->count_all('tb_data_prospek');
-        } else {
-            $config['total_rows'] = $data_report->num_rows();
-        }
+        $config['total_rows'] = $data_report->num_rows();
 
         $choice = $config["total_rows"] / $config["per_page"];
 		$config["num_links"] = floor($choice);

@@ -19,55 +19,60 @@ class Spk extends CI_Controller {
 		}
 	}
 
-  public function index()
-  {
-    $baris_data = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_data_prospek td INNER JOIN tb_model_kendaraan tm ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'SPK'";
-
-    $config['base_url'] = site_url('dashboard_admin/spk/index'); //site url
-		$config['per_page'] = 5;  //show record per halaman
-		$config["uri_segment"] = 4;  // uri parameter
-		$config['total_rows'] = $this->db->query($baris_data)->num_rows();
-		// Membuat Style pagination untuk BootStrap v4
-		$config['first_link']       = 'First';
-		$config['last_link']        = 'Last';
-		$config['next_link']        = 'Next';
-		$config['prev_link']        = 'Prev';
-		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-		$config['full_tag_close']   = '</ul></nav></div>';
-		$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-		$config['num_tag_close']    = '</span></li>';
-		$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-		$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-		$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-		$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['prev_tagl_close']  = '</span>Next</li>';
-		$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-		$config['first_tagl_close'] = '</span></li>';
-		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['last_tagl_close']  = '</span></li>';
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-		
-		$data_prospek =  $this->M_spk->get_data_spk($config["per_page"], $data['page']);
-		
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
-
-		$this->pagination->initialize($config);
-		
-		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data = array(
-			'data_prospek' => $data_prospek->result(),
-		);           
-		$data['pagination'] = $this->pagination->create_links();
-
-    $data['nama_lengkap'] = $this->M_spk->get_data_user()->result();
+    public function index()
+    {
+        $get_bulan = null;
+        $get_nama = null;
     
-    $this->load->view('template_admin/v_header');
-		$this->load->view('template_admin/v_sidebar');
-		$this->load->view('template_admin/data_spk/v_index', $data);
-		$this->load->view('template_admin/v_footer');
-  }
+        if($this->input->get('bulan') AND $this->input->get('nama_sales')){
+            $get_bulan = $this->input->get('bulan');
+            $get_nama	 = $this->input->get('nama_sales');
+        }
+
+        $config['base_url'] = site_url('dashboard_admin/spk/index'); //site url
+        $config['per_page'] = 5;  //show record per halaman
+        $config["uri_segment"] = 4;  // uri parameter
+        // Membuat Style pagination untuk BootStrap v4
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+        $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        
+        $data_prospek =  $this->M_spk->get_data_spk($config["per_page"], $data['page'], $get_bulan, $get_nama);
+        $config['total_rows'] = $data_prospek->num_rows();
+
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
+
+        $this->pagination->initialize($config);
+        
+        //panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
+        $data = array(
+            'data_prospek' => $data_prospek->result(),
+            'pagination' =>  $this->pagination->create_links(),
+            'nama_lengkap' => $this->M_spk->get_data_user()->result()
+        );           
+
+        $this->load->view('template_admin/v_header');
+        $this->load->view('template_admin/v_sidebar');
+        $this->load->view('template_admin/data_spk/v_index', $data);
+        $this->load->view('template_admin/v_footer');
+    }
 
   public function edit_spk($id_data)
   {
