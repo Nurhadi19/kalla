@@ -21,13 +21,16 @@ class C_do extends CI_Controller {
 
   public function index()
   {
-    $baris_data = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_data_prospek td INNER JOIN tb_model_kendaraan tm ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO'";
+		$get_sales = null;
+		$get_bulan = null;
 
-    $config['base_url'] = site_url('dashboard_admin/c_do'); //site url
+		if($this->input->get('bulan') AND $this->input->get('nama_sales')){
+			$get_bulan = $this->input->get('bulan');
+			$get_sales	 = $this->input->get('nama_sales');
+		}
+    	$config['base_url'] = site_url('dashboard_admin/c_do'); //site url
 		$config['per_page'] = 5;  //show record per halaman
 		$config["uri_segment"] = 3;  // uri parameter
-		// $config['total_rows'] = $this->db->count_all('tb_data_prospek');
-		$config['total_rows'] = $this->db->query($baris_data)->num_rows();
 		// Membuat Style pagination untuk BootStrap v4
 		$config['first_link']       = 'First';
 		$config['last_link']        = 'Last';
@@ -49,22 +52,27 @@ class C_do extends CI_Controller {
 		$config['last_tagl_close']  = '</span></li>';
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
-		$data_prospek =  $this->M_do->get_data_do($config["per_page"], $data['page']);
-		
+		$data_prospek =  $this->M_do->get_data_do($config["per_page"], $data['page'], $get_bulan, $get_sales);
+		// echo '<pre>';print_r($data_prospek->result());echo '</pre>';die();
+		if($get_bulan == null && $get_sales == null){
+			$config['total_rows'] = $this->db->where('status_prospek', 'DO')->from('tb_data_prospek')->count_all_results();
+		} else {
+			$config['total_rows'] = $data_prospek->num_rows();
+		}
 		$choice = $config["total_rows"] / $config["per_page"];
 		$config["num_links"] = floor($choice);
+
 
 		$this->pagination->initialize($config);
 		
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
 		$data = array(
 			'data_prospek' => $data_prospek->result(),
-		);           
-		$data['pagination'] = $this->pagination->create_links();
+			'pagination' =>  $this->pagination->create_links(),
+			'nama_lengkap' => $this->M_do->get_data_user()->result()
+ 		);
 
-    $data['nama_lengkap'] = $this->M_do->get_data_user()->result();
-    
-    $this->load->view('template_admin/v_header');
+    	$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_do/v_index', $data);
 		$this->load->view('template_admin/v_footer');

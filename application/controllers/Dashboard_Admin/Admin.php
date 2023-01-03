@@ -46,7 +46,7 @@ class Admin extends CI_Controller {
 	{
 		$get_bulan = null;
 		$get_nama = null;
-		if($this->input->get('bulan') || $this->input->get('nama_sales')){
+		if($this->input->get('bulan') AND $this->input->get('nama_sales')){
 			$get_bulan = $this->input->get('bulan');
 			$get_nama	 = $this->input->get('nama_sales');
 		}
@@ -120,7 +120,7 @@ class Admin extends CI_Controller {
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
 		$data_prospek =  $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
-		
+		// echo '<pre>';print_r($data_prospek->result());echo '</pre>';die();
 		if($get_bulan == null && $get_nama == null){
 			$config['total_rows'] = $this->db->count_all('tb_data_prospek');
 		} else {
@@ -139,30 +139,13 @@ class Admin extends CI_Controller {
 			'nama_sales' => $get_nama
 		);           
 		$data['pagination'] = $this->pagination->create_links();
-
-		//load view mahasiswa view
-		//$this->load->view('mahasiswa_view',$data);
-
-		//$data['data_prospek'] = $this->M_admin->get_data()->result();
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
-
-		// $query = "SELECT nama_model_kendaraan FROM tb_data_prospek INNER JOIN tb_model_kendaraan ON model_kendaraan = id_model_kendaraan";
-		// $data['nama_model_kendaraan'] = $this->db->query($query)->result();
 
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_prospek/v_index',$data);
 		$this->load->view('template_admin/v_footer');
 	}
-
-	// public function prospek()
-	// {
-	// 	$data['data_prospek'] = $this->M_admin->get_data()->result();
-	// 	$this->load->view('template_admin/v_header');
-	// 	$this->load->view('template_admin/v_sidebar');
-	// 	$this->load->view('template_admin/data_prospek/v_index',$data);
-	// 	$this->load->view('template_admin/v_footer');
-	// }
 
 	public function report()
 	{
