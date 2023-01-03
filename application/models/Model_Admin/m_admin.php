@@ -16,7 +16,7 @@ class M_admin extends CI_Model {
       return $this->db->query($query);
     } else {
       $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td
-      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(tanggal_prospek) = $month AND nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
+      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $month AND td.nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
       return $this->db->query($query);
     }
   }
@@ -28,10 +28,14 @@ class M_admin extends CI_Model {
     return $this->db->query($query);
   }
 
-  public function get_all_data_report($limit, $start)
+  public function get_all_data_report($limit, $start, $bulan = null, $nama_sales = null, $prospek = null)
   {
-    $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan LIMIT $start, $limit");
-      
+    if($bulan == null && $nama_sales == null && $prospek == null){
+        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan LIMIT $start, $limit");
+    } else {
+        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $bulan AND td.nama_sales = '$nama_sales' AND td.status_prospek = '$prospek' LIMIT $start, $limit");
+    }
+
     return $this->db->query($query);
   }
 

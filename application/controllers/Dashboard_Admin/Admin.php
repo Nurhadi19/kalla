@@ -149,14 +149,21 @@ class Admin extends CI_Controller {
 
 	public function report()
 	{
+        $get_bulan = null;
+		$get_nama = null;
+        $get_prospek = null;
+
+		if($this->input->get('bulan') AND $this->input->get('nama_sales') AND $this->input->get('prospek')){
+			$get_bulan = $this->input->get('bulan');
+			$get_nama	 = $this->input->get('nama_sales');
+            $get_prospek = $this->input->get('prospek');
+		}
+
 		//konfigurasi pagination
 		$config['base_url'] = site_url('dashboard_admin/admin/report'); //site url
-		$config['total_rows'] = $this->db->count_all('tb_data_prospek'); //total row
 		$config['per_page'] = 5;  //show record per halaman
 		$config["uri_segment"] = 4;  // uri parameter
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
-
+		
 		// Membuat Style pagination untuk BootStrap v4
 		$config['first_link']       = 'First';
 		$config['last_link']        = 'Last';
@@ -176,22 +183,25 @@ class Admin extends CI_Controller {
 		$config['first_tagl_close'] = '</span></li>';
 		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
 		$config['last_tagl_close']  = '</span></li>';
-
-		$this->pagination->initialize($config);
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
-		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data['data_prospek'] = $this->M_admin->get_all_data_report($config["per_page"], $data['page'])->result();           
+        $data_report = $this->M_admin->get_all_data_report($config["per_page"], $data['page'], $get_bulan, $get_nama, $get_prospek);           
 
+        if($get_bulan == null && $get_nama == null && $get_prospek == null){
+            $config['total_rows'] = $this->db->count_all('tb_data_prospek');
+        } else {
+            $config['total_rows'] = $data_report->num_rows();
+        }
+
+        $choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
+
+        $this->pagination->initialize($config);
+
+		$data['data_prospek'] = $data_report->result();           
 		$data['pagination'] = $this->pagination->create_links();
-
-		//load view mahasiswa view
-		//$this->load->view('mahasiswa_view',$data);
-
-		//$data['data_prospek'] = $this->M_admin->get_data()->result();
-		
-
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
+
 		$this->load->view('template_admin/v_header');
 		$this->load->view('template_admin/v_sidebar');
 		$this->load->view('template_admin/data_report/v_index', $data);

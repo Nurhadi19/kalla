@@ -7,12 +7,12 @@
                 <hr />
               </div>
               <div class="body">
-                <form action="#">
+                <form action="<?= base_url('dashboard_admin/admin/report') ?>" method="GET">
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="pencarianNama">Pencarian Nama</label>
-                        <select name="nama-sales" id="pencarianNama" class="form-control">
+                        <select name="nama_sales" id="pencarianNama" class="form-control">
                         <?php
                             foreach($nama_lengkap as $nama)
                             {?>
@@ -24,7 +24,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="periodeBulan">Periode Bulan</label>
-                        <select name="nama-sales" id="periodeBulan" class="form-control">
+                        <select name="bulan" id="periodeBulan" class="form-control">
                           <option value="1">Januari</option>
                           <option value="2">Februari</option>
                           <option value="3">Maret</option>
@@ -43,12 +43,12 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="keteranganProspek">Keterangan Prospek</label>
-                        <select name="keteranganProspek" id="keteranganProspek" class="form-control">
-                          <option value="1">Low</option>
-                          <option value="2">Medium</option>
-                          <option value="3">Hot</option>
-                          <option value="4">SPK</option>
-                          <option value="5">DO</option>
+                        <select name="prospek" id="keteranganProspek" class="form-control">
+                          <option value="Low">Low</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Hot">Hot</option>
+                          <option value="SPK">SPK</option>
+                          <option value="DO">DO</option>
                         </select>
                       </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="">
-                          <button class="btn btn-outline-success" type="button">Search<i class="fas fa-search fa-sm ml-2"></i></button>
+                          <button class="btn btn-outline-success" type="submit">Search<i class="fas fa-search fa-sm ml-2"></i></button>
                         </div>
                       </div>
                     </div>
