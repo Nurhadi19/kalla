@@ -24,14 +24,15 @@ class C_do extends CI_Controller {
 		$get_sales = null;
 		$get_bulan = null;
 
-		if($this->input->get('bulan') AND $this->input->get('nama_sales')){
-			$get_bulan = $this->input->get('bulan');
-			$get_sales	 = $this->input->get('nama_sales');
-		}
-    	$config['base_url'] = site_url('dashboard_admin/c_do'); //site url
+    $config['base_url'] = site_url('dashboard_admin/c_do/index'); //site url
 		$config['per_page'] = 5;  //show record per halaman
-		$config["uri_segment"] = 3;  // uri parameter
+		$config["uri_segment"] = 4;  // uri parameter
+		// $config['total_rows'] = $this->db->count_all('tb_data_prospek');
+		$config['total_rows'] = $this->db->query($baris_data)->num_rows();
 		// Membuat Style pagination untuk BootStrap v4
+		
+		$choice = $config["total_rows"] / $config["per_page"];
+		$config["num_links"] = floor($choice);
 		$config['first_link']       = 'First';
 		$config['last_link']        = 'Last';
 		$config['next_link']        = 'Next';
@@ -50,17 +51,11 @@ class C_do extends CI_Controller {
 		$config['first_tagl_close'] = '</span></li>';
 		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
 		$config['last_tagl_close']  = '</span></li>';
+
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
-		$data_prospek =  $this->M_do->get_data_do($config["per_page"], $data['page'], $get_bulan, $get_sales);
-		// echo '<pre>';print_r($data_prospek->result());echo '</pre>';die();
-		if($get_bulan == null && $get_sales == null){
-			$config['total_rows'] = $this->db->where('status_prospek', 'DO')->from('tb_data_prospek')->count_all_results();
-		} else {
-			$config['total_rows'] = $data_prospek->num_rows();
-		}
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
+		$data_prospek =  $this->M_do->get_data_do($config["per_page"], $data['page']);
+		
 
 
 		$this->pagination->initialize($config);
