@@ -47,6 +47,8 @@
                           <option value="1">Low</option>
                           <option value="2">Medium</option>
                           <option value="3">Hot</option>
+                          <option value="4">DO</option>
+                          <option value="5">SPK</option>
                         </select>
                       </div>
                     </div>
