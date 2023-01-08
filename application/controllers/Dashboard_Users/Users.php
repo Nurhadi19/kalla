@@ -49,45 +49,100 @@ class Users extends CI_Controller {
 	
 	public function prospek()
 	{
-		$where = array('nama_sales' => $this->session->userdata('nama_lengkap'));
+		//$where = array('nama_sales' => $this->session->userdata('nama_lengkap'));
 
-		$config['base_url'] = site_url('dashboard_users/users/prospek');
-		$config['total_rows'] = $this->db->get_where('tb_data_prospek', $where)->num_rows();
-		$config['per_page'] = 5;
-		$config['uri_segment'] = 4;
-		$choice = $config['total_rows'] / $config['per_page'];
-		$config['num_links'] = floor($choice);
+		$get_nama = null;
+		$get_bulan = null;
 
-		$config['first_link']       = 'First';
-		$config['last_link']        = 'Last';
-		$config['next_link']        = 'Next';
-		$config['prev_link']        = 'Prev';
-		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-		$config['full_tag_close']   = '</ul></nav></div>';
-		$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-		$config['num_tag_close']    = '</span></li>';
-		$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-		$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-		$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-		$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['prev_tagl_close']  = '</span>Next</li>';
-		$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-		$config['first_tagl_close'] = '</span></li>';
-		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['last_tagl_close']  = '</span></li>';
+		if($this->input->get('nama_sales') && $this->input->get('bulan')){
+			$get_nama = $this->input->get('nama_sales');
+			$get_bulan = $this->input->get('bulan');
+		}
 
-		$this->pagination->initialize($config);
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		$bulan = date('M');
+			switch($bulan){
+				case 'Jan':
+					$bulan = 'Januari';
+					break;
+				case 'Feb':
+					$bulan = 'Februari';
+					break;
+				case 'Mar':
+					$bulan = 'Maret';
+					break;
+				case 'Apr':
+					$bulan = 'April';
+					break;
+				case 'May':
+					$bulan = 'Mei';
+					break;
+				case 'Jun':
+					$bulan = 'Juni';
+					break;
+				case 'Jul':
+					$bulan = 'Juli';
+					break;
+				case 'Aug':
+					$bulan = 'Agustus';
+					break;
+				case 'Sep':
+					$bulan = 'September';
+					break;
+				case 'Oct':
+					$bulan = 'Oktober';
+					break;
+				case 'Nov':
+					$bulan = 'November';
+					break;
+				case 'Dec':
+					$bulan = 'Desember';
+					break;
+				default:
+					$bulan = 'Invalid Month';
+
+			}
+
+		// $config['base_url'] = site_url('dashboard_users/users/prospek');
+		// $config['total_rows'] = $this->db->get_where('tb_data_prospek', $where)->num_rows();
+		// $config['per_page'] = 5;
+		// $config['uri_segment'] = 4;
+		// $choice = $config['total_rows'] / $config['per_page'];
+		// $config['num_links'] = floor($choice);
+
+		// $config['first_link']       = 'First';
+		// $config['last_link']        = 'Last';
+		// $config['next_link']        = 'Next';
+		// $config['prev_link']        = 'Prev';
+		// $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+		// $config['full_tag_close']   = '</ul></nav></div>';
+		// $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+		// $config['num_tag_close']    = '</span></li>';
+		// $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+		// $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+		// $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+		// $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['prev_tagl_close']  = '</span>Next</li>';
+		// $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+		// $config['first_tagl_close'] = '</span></li>';
+		// $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['last_tagl_close']  = '</span></li>';
+
+		// $this->pagination->initialize($config);
+		// $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data['data_prospek'] = $this->M_users->get_data($config["per_page"], $data['page'])->result();           
+		// $data['data_prospek'] = $this->M_users->get_data($config["per_page"], $data['page'])->result();           
 
-		$data['pagination'] = $this->pagination->create_links();
+		// $data['pagination'] = $this->pagination->create_links();
 
 
-    
-		// $data['data_prospek'] = $this->M_users->get_data($where,'tb_data_prospek')->result();
+    $data_prospek = $this->M_users->get_data($get_bulan, $get_nama);
+		$data = array(
+			'data_prospek' => $data_prospek->result(),
+			'bulan' => $bulan,
+			'nama_sales' => $get_nama
+		);
 		$this->load->view('template_user/v_header');
 		$this->load->view('template_user/v_sidebar');
 		$this->load->view('template_user/data_prospek/v_index',$data);
@@ -108,43 +163,54 @@ class Users extends CI_Controller {
 
 	public function report()
 	{
-		$where = array(
-			'sumber_prospek'	=> $this->session->userdata('nama_lengkap')
-		);
+		// $where = array(
+		// 	'nama_sales'	=> $this->session->userdata('nama_lengkap')
+		// );
 
-		$config['base_url'] = site_url('dashboard_users/users/prospek');
-		$config['total_rows'] = $this->db->get_where('tb_data_prospek', $where)->num_rows();
-		$config['per_page'] = 5;
-		$config['uri_segment'] = 4;
-		$choice = $config['total_rows'] / $config['per_page'];
-		$config['num_links'] = floor($choice);
+		$get_bulan = null;
+		$get_nama = null;
+		$get_prospek = null;
 
-		$config['first_link']       = 'First';
-		$config['last_link']        = 'Last';
-		$config['next_link']        = 'Next';
-		$config['prev_link']        = 'Prev';
-		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-		$config['full_tag_close']   = '</ul></nav></div>';
-		$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-		$config['num_tag_close']    = '</span></li>';
-		$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-		$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-		$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-		$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['prev_tagl_close']  = '</span>Next</li>';
-		$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-		$config['first_tagl_close'] = '</span></li>';
-		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['last_tagl_close']  = '</span></li>';
+		if($this->input->get('bulan') AND $this->input->get('nama_sales') AND $this->input->get('prospek')){
+			$get_bulan = $this->input->get('bulan');
+			$get_nama	 = $this->input->get('nama_sales');
+      $get_prospek = $this->input->get('prospek');
+		}
 
-		$this->pagination->initialize($config);
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		// $config['base_url'] = site_url('dashboard_users/users/prospek');
+		// $config['total_rows'] = $this->db->get_where('tb_data_prospek', $where)->num_rows();
+		// $config['per_page'] = 5;
+		// $config['uri_segment'] = 4;
+		// $choice = $config['total_rows'] / $config['per_page'];
+		// $config['num_links'] = floor($choice);
+
+		// $config['first_link']       = 'First';
+		// $config['last_link']        = 'Last';
+		// $config['next_link']        = 'Next';
+		// $config['prev_link']        = 'Prev';
+		// $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+		// $config['full_tag_close']   = '</ul></nav></div>';
+		// $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+		// $config['num_tag_close']    = '</span></li>';
+		// $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+		// $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+		// $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+		// $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['prev_tagl_close']  = '</span>Next</li>';
+		// $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+		// $config['first_tagl_close'] = '</span></li>';
+		// $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['last_tagl_close']  = '</span></li>';
+
+		// $this->pagination->initialize($config);
+		// $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-		$data['data_prospek'] = $this->M_users->get_all_data_report($config["per_page"], $data['page'])->result();           
+		$data_report = $this->M_users->get_all_data_report($get_nama, $get_bulan, $get_prospek);  
+		$data['data_prospek'] = $data_report->result();         
 
-		$data['pagination'] = $this->pagination->create_links();
+		// $data['pagination'] = $this->pagination->create_links();
 
 		$this->load->view('template_user/v_header');
 		$this->load->view('template_user/v_sidebar');

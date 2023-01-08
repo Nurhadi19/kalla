@@ -46,6 +46,8 @@ class Admin extends CI_Controller {
 	{
 		$get_bulan = null;
 		$get_nama = null;
+		// $limit = 5;
+		// $start = 0;
 		if($this->input->get('bulan') AND $this->input->get('nama_sales')){
 			$get_bulan = $this->input->get('bulan');
 			$get_nama	 = $this->input->get('nama_sales');
@@ -77,7 +79,7 @@ class Admin extends CI_Controller {
             case 'Aug':
                 $bulan = 'Agustus';
                 break;
-            case 'Sept':
+            case 'Sep':
                 $bulan = 'September';
                 break;
             case 'Oct':
@@ -94,47 +96,60 @@ class Admin extends CI_Controller {
         }
 		
 		//konfigurasi pagination
-		$config['base_url'] = site_url('dashboard_admin/admin/prospek'); //site url
-		$config['per_page'] = 5;  //show record per halaman
-		$config["uri_segment"] = 4;  // uri parameter
+		// $config['base_url'] = site_url('dashboard_admin/admin/prospek'); //site url
+		// $config['per_page'] = 5;  //show record per halaman
+		// $config["uri_segment"] = 4;  // uri parameter
 		
 		// Membuat Style pagination untuk BootStrap v4
-		$config['first_link']       = 'First';
-		$config['last_link']        = 'Last';
-		$config['next_link']        = 'Next';
-		$config['prev_link']        = 'Prev';
-		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-		$config['full_tag_close']   = '</ul></nav></div>';
-		$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-		$config['num_tag_close']    = '</span></li>';
-		$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-		$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-		$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-		$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['prev_tagl_close']  = '</span>Next</li>';
-		$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-		$config['first_tagl_close'] = '</span></li>';
-		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['last_tagl_close']  = '</span></li>';
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		// $config['first_link']       = 'First';
+		// $config['last_link']        = 'Last';
+		// $config['next_link']        = 'Next';
+		// $config['prev_link']        = 'Prev';
+		// $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+		// $config['full_tag_close']   = '</ul></nav></div>';
+		// $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+		// $config['num_tag_close']    = '</span></li>';
+		// $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+		// $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+		// $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+		// $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['prev_tagl_close']  = '</span>Next</li>';
+		// $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+		// $config['first_tagl_close'] = '</span></li>';
+		// $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['last_tagl_close']  = '</span></li>';
+		// $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 		
-		$data_prospek =  $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
+		// $data_prospek =  $this->M_admin->get_data($config["per_page"], $data['page'], $get_bulan, $get_nama);
+		$data_prospek =  $this->M_admin->get_data($get_bulan, $get_nama);
+		// var_dump($data_prospek->num_rows()); die();
 
-		$config['total_rows'] = $data_prospek->num_rows();
+		// if($get_bulan == null && $get_nama == null){
+		// 	$config['total_rows'] = $this->db->count_all('tb_data_prospek');
+		// } else {
+		// 	// $config['total_rows'] = $data_prospek->num_rows();
+		// 	$this->db->like('nama_sales', $get_nama);
+		// 	$this->db->like('tanggal_prospek', $get_bulan);
+		// 	$this->db->from('tb_data_prospek');
+		// 	// $config['total_rows'] = $data_prospek->count_all_results();
+		// 	$config['total_rows'] = $this->db->count_all_results();
+		// 	// var_dump($config['total_rows']); die();
 		
-		$choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
+		// }
 
-		$this->pagination->initialize($config);
+
+		// $choice = $config["total_rows"] / $config["per_page"];
+		// $config["num_links"] = floor($choice);
+
+		// $this->pagination->initialize($config);
 		
-		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
 		$data = array(
 			'data_prospek' => $data_prospek->result(),
 			'bulan' => $bulan,
 			'nama_sales' => $get_nama
 		);           
-		$data['pagination'] = $this->pagination->create_links();
+		// $data['pagination'] = $this->pagination->create_links();
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 
 		$this->load->view('template_admin/v_header');
@@ -145,53 +160,53 @@ class Admin extends CI_Controller {
 
 	public function report()
 	{
-        $get_bulan = null;
+		$get_bulan = null;
 		$get_nama = null;
-        $get_prospek = null;
+		$get_prospek = null;
 
 		if($this->input->get('bulan') AND $this->input->get('nama_sales') AND $this->input->get('prospek')){
 			$get_bulan = $this->input->get('bulan');
 			$get_nama	 = $this->input->get('nama_sales');
-            $get_prospek = $this->input->get('prospek');
+      $get_prospek = $this->input->get('prospek');
 		}
 
-		//konfigurasi pagination
-		$config['base_url'] = site_url('dashboard_admin/admin/report'); //site url
-		$config['per_page'] = 5;  //show record per halaman
-		$config["uri_segment"] = 4;  // uri parameter
+		// //konfigurasi pagination
+		// $config['base_url'] = site_url('dashboard_admin/admin/report'); //site url
+		// $config['per_page'] = 5;  //show record per halaman
+		// $config["uri_segment"] = 4;  // uri parameter
 		
-		// Membuat Style pagination untuk BootStrap v4
-		$config['first_link']       = 'First';
-		$config['last_link']        = 'Last';
-		$config['next_link']        = 'Next';
-		$config['prev_link']        = 'Prev';
-		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-		$config['full_tag_close']   = '</ul></nav></div>';
-		$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-		$config['num_tag_close']    = '</span></li>';
-		$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-		$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-		$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-		$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['prev_tagl_close']  = '</span>Next</li>';
-		$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-		$config['first_tagl_close'] = '</span></li>';
-		$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-		$config['last_tagl_close']  = '</span></li>';
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		// // Membuat Style pagination untuk BootStrap v4
+		// $config['first_link']       = 'First';
+		// $config['last_link']        = 'Last';
+		// $config['next_link']        = 'Next';
+		// $config['prev_link']        = 'Prev';
+		// $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+		// $config['full_tag_close']   = '</ul></nav></div>';
+		// $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+		// $config['num_tag_close']    = '</span></li>';
+		// $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+		// $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+		// $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+		// $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['prev_tagl_close']  = '</span>Next</li>';
+		// $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+		// $config['first_tagl_close'] = '</span></li>';
+		// $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+		// $config['last_tagl_close']  = '</span></li>';
+		// $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
-        $data_report = $this->M_admin->get_all_data_report($config["per_page"], $data['page'], $get_bulan, $get_nama, $get_prospek);           
+    $data_report = $this->M_admin->get_all_data_report($get_bulan, $get_nama, $get_prospek);           
 
-        $config['total_rows'] = $data_report->num_rows();
+  	// $config['total_rows'] = $data_report->num_rows();
 
-        $choice = $config["total_rows"] / $config["per_page"];
-		$config["num_links"] = floor($choice);
+    // $choice = $config["total_rows"] / $config["per_page"];
+		// $config["num_links"] = floor($choice);
 
-        $this->pagination->initialize($config);
+    // $this->pagination->initialize($config);
 
 		$data['data_prospek'] = $data_report->result();           
-		$data['pagination'] = $this->pagination->create_links();
+		// $data['pagination'] = $this->pagination->create_links();
 		$data['nama_lengkap'] = $this->M_admin->get_data_user()->result();
 
 		$this->load->view('template_admin/v_header');
@@ -205,7 +220,7 @@ class Admin extends CI_Controller {
 		//konfigurasi pagination
 		$config['base_url'] = site_url('dashboard_admin/admin/daftar_user');
 		$config['total_rows'] = $this->db->get('tb_user')->num_rows();
-		$config['per_page'] = 5;
+		$config['per_page'] = 10;
 		$config['uri_segment'] = 4;
 		$choice = $config['total_rows'] / $config['per_page'];
 		$config['num_links'] = floor($choice);

@@ -18,6 +18,9 @@
 
     <!-- Kalla CSS -->
     <link href="<?= base_url(); ?>assets/css/kalla.css" rel="stylesheet" />
+
+    <!-- DataTables -->
+    <link href="<?= base_url();?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   </head>
 
   <body id="page-top">

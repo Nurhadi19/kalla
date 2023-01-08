@@ -7,18 +7,18 @@
                 <hr />
               </div>
               <div class="body">
-                <form action="#">
+                <form action="<?= base_url()?>dashboard_users/users/report" method="GET">
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="pencarianNama">Nama Sales</label>
-                        <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" readonly>
+                        <input type="text" value="<?= $this->session->userdata('nama_lengkap')?>" class="form-control" name="nama_sales" readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="periodeBulan">Periode Bulan</label>
-                        <select name="nama-sales" id="periodeBulan" class="form-control">
+                        <select name="bulan" id="periodeBulan" class="form-control">
                           <option value="1">Januari</option>
                           <option value="2">Februari</option>
                           <option value="3">Maret</option>
@@ -37,12 +37,12 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="keteranganProspek">Keterangan Prospek</label>
-                        <select name="keteranganProspek" id="keteranganProspek" class="form-control">
-                          <option value="1">Low</option>
-                          <option value="2">Medium</option>
-                          <option value="3">Hot</option>
-                          <option value="4">DO</option>
-                          <option value="5">SPK</option>
+                        <select name="prospek" id="keteranganProspek" class="form-control">
+                          <option value="Low">Low</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Hot">Hot</option>
+                          <option value="DO">DO</option>
+                          <option value="SPK">SPK</option>
                         </select>
                       </div>
                     </div>
@@ -51,7 +51,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-success" type="button">Search<i class="fas fa-search fa-sm ml-2"></i></button>
+                          <button class="btn btn-outline-success" type="submit">Search<i class="fas fa-search fa-sm ml-2"></i></button>
                         </div>
                       </div>
                     </div>
@@ -63,7 +63,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="table-responsive">
-                      <table class="table table-striped table-bordered table-hover">
+                      <table class="table table-striped table-bordered table-hover" id="prospekTable">
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
                             <th rowspan="2" class="align-middle">No.</th>
@@ -109,11 +109,6 @@
                           <?php }?>
                         </tbody>
                       </table>
-                      <div class="row">
-                        <div class="col">
-                          <?= $pagination?>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>

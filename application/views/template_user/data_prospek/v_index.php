@@ -1,4 +1,62 @@
-          <!-- Begin Page Content -->
+<?php
+$get_nama = null;
+$get_bulan = null;
+
+if(isset($_GET['nama_sales'])){
+  $get_nama = $_GET['nama_sales'];
+}
+
+if(isset($_GET['bulan'])){
+  $get_bulan = $_GET['bulan'];
+}
+
+if($this->input->get('bulan')){
+  $bulan = $this->input->get('bulan');
+  switch($bulan){
+    case '1':
+      $bulan = 'Januari';
+      break;
+    case '2':
+      $bulan = 'Februari';
+      break;
+    case '3':
+      $bulan = 'Maret';
+      break;
+    case '4':
+      $bulan = 'April';
+      break;
+    case '5':
+      $bulan = 'Mei';
+      break;
+    case '6':
+      $bulan = 'Juni';
+      break;
+    case '7':
+      $bulan = 'Juli';
+      break;
+    case '8':
+      $bulan = 'Agustus';
+      break;
+    case '9':
+      $bulan = 'September';
+      break;
+    case '10':
+      $bulan = 'Oktober';
+      break;
+    case '11':
+      $bulan = 'November';
+      break;
+    case '12':
+      $bulan = 'Desember';
+      break;
+    default:
+      $bulan = 'Invalid Month';
+  }
+}
+
+?>
+
+<!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Header Of Data Prospekan -->
             <div class="card shadow p-4">
@@ -7,19 +65,19 @@
                 <hr />
               </div>
               <div class="body">
-                <form action="#">
+                <form action="<?= base_url()?>dashboard_users/users/prospek" method="GET">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="pencarianNama">Nama Sales</label>
-                          <input type="text" class="form-control" value="<?= $this->session->userdata('nama_lengkap')?>" readonly>
+                          <input type="text" class="form-control" value="<?= $this->session->userdata('nama_lengkap')?>" name="nama_sales" readonly>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="periodeBulan">Periode Bulan</label>
-                        <select name="nama-sales" id="periodeBulan" class="form-control">
+                        <select name="bulan" id="periodeBulan" class="form-control">
                           <option value="1">Januari</option>
                           <option value="2">Februari</option>
                           <option value="3">Maret</option>
@@ -40,7 +98,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="">
-                          <button class="btn btn-outline-success" type="button">Search<i class="fas fa-search fa-sm ml-2"></i></button>
+                          <button class="btn btn-outline-success" type="submit">Search<i class="fas fa-search fa-sm ml-2"></i></button>
                         </div>
                       </div>
                     </div>
@@ -52,7 +110,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="table-responsive">
-                      <table class="table table-striped table-bordered table-hover">
+                      <table class="table table-striped table-bordered table-hover" id="prospekTable">
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
                               <th rowspan="2" class="align-middle">No.</th>
@@ -106,7 +164,7 @@
                       </table>
                       <div class="row">
                         <div class="col">
-                          <?= $pagination?>
+                          
                         </div>
                       </div>
                     </div>

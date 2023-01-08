@@ -114,7 +114,7 @@ if($this->input->get('bulan')){
                   </div>
                   <div class="col-md-12">
                     <div class="table-responsive">
-                      <table class="table table-striped table-bordered table-hover">
+                      <table class="table table-striped table-bordered table-hover" id="prospekTable">
                         <thead class="thead-success text-white">
                           <tr role="row" class="text-center">
                             <th rowspan="2" class="align-middle">No.</th>
@@ -172,7 +172,7 @@ if($this->input->get('bulan')){
                       <div class="row">
                         <div class="col">
                          <!--Tampilkan pagination-->
-                         <?php echo $pagination; ?>
+                         <?php //echo $pagination; ?>
                         </div>
                       </div>
                     </div>

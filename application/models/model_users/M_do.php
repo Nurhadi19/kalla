@@ -9,12 +9,16 @@ class M_do extends CI_Model {
 		
 	}
 
-  public function get_data_do($limit, $start)
+  public function get_data_do($month = null, $nama_sales = null)
   {
 
-    $nama_sales = $this->session->userdata('nama_lengkap');
+    $default = $this->session->userdata('nama_lengkap');
 
-    $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO' AND nama_sales = '$nama_sales'  LIMIT $start, $limit");
+    if($month == null && $nama_sales == null){
+      $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO' AND td.nama_sales = '$default'";
+    } else {
+      $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek = 'DO' AND td.nama_sales = '$nama_sales' AND month(td.tanggal_prospek) = $month";
+    }
       
     return $this->db->query($query);
   }

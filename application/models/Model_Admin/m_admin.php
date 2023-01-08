@@ -8,15 +8,17 @@ class M_admin extends CI_Model {
       $this->load->database();
   }
   
-  public function get_data($limit, $start, $month = null, $nama_sales = null)
+  
+  public function get_data($month = null, $nama_sales = null)
   {
+
+    
     if($month == null && $nama_sales == null){
-      $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td
-      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
+      $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE td.status_prospek IN ('Low', 'Medium', 'Hot')";
       return $this->db->query($query);
     } else {
       $query = "SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td
-      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $month AND td.nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot') LIMIT $start, $limit";
+      ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $month AND td.nama_sales = '$nama_sales' AND td.status_prospek IN ('Low', 'Medium', 'Hot')";
       return $this->db->query($query);
     }
   }
@@ -28,12 +30,12 @@ class M_admin extends CI_Model {
     return $this->db->query($query);
   }
 
-  public function get_all_data_report($limit, $start, $bulan = null, $nama_sales = null, $prospek = null)
+  public function get_all_data_report($bulan = null, $nama_sales = null, $prospek = null)
   {
     if($bulan == null && $nama_sales == null && $prospek == null){
-        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan LIMIT $start, $limit");
+        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan");
     } else {
-        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $bulan AND td.nama_sales = '$nama_sales' AND td.status_prospek = '$prospek' LIMIT $start, $limit");
+        $query = ("SELECT td.id_data, td.nama_sales, td.nama_customer, td.media, td.alamat, td.no_hp, td.sumber_prospek, tm.nama_model_kendaraan, td.type_kendaraan, td.status_prospek, td.tanggal_prospek, td.keterangan_prospek FROM tb_model_kendaraan tm INNER JOIN tb_data_prospek td ON td.id_model_kendaraan = tm.id_model_kendaraan WHERE month(td.tanggal_prospek) = $bulan AND td.nama_sales = '$nama_sales' AND td.status_prospek = '$prospek'");
     }
 
     return $this->db->query($query);
@@ -41,7 +43,7 @@ class M_admin extends CI_Model {
 
   public function get_user($limit, $start)
   {
-    $this->db->order_by('nama_lengkap', 'ASC');
+    $this->db->order_by('id_user', 'DESC');
     return $this->db->get('tb_user', $limit, $start);
   }
 
